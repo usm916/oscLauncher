@@ -1,0 +1,14 @@
+obj/
+.vs/
+addons/
+*.dll
+bin/oscLauncher.exe
+bin/oscLauncher.exp
+bin/oscLauncher.lib
+bin/oscLauncher_debug.exe
+bin/oscLauncher_debug.exp
+bin/oscLauncher_debug.ilk
+bin/oscLauncher_debug.lib
+bin/oscLauncher_debug.pdb
+bin/data/.gitkeep
+bin/data/log.txt
