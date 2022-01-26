@@ -1,7 +1,8 @@
 {
     "listenPort":12233,
     "defaultTabNum":0,
-    "defaultBrowserLocation":"start ",
+    "defaultBrowserLocation":"start",
+    "logNotice":true,
     "targets":[
         {
             "enable":true,
@@ -22,201 +23,224 @@
             "port":12234
         }
     ],
+    "keyTypes":["apps","url","f","cmds","txt"],
     "apps":[
         {
             "key":"houdini",
-            "location":"C:\\Program Files\\Side Effects Software\\Houdini 18.5.696\\bin\\houdinifx.exe",
+            "data":"C:\\Program Files\\Side Effects Software\\Houdini 18.5.696\\bin\\houdinifx.exe",
             "option":""
         },
         {
             "key":"blender",
-            "location":"C:\\Program Files\\Blender Foundation\\ecycles\\blender.exe",
+            "data":"C:\\Program Files\\Blender Foundation\\ecycles\\blender.exe",
             "option":""
         },
         {
             "key":"visualstudio2019",
-            "location":"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\devenv.exe",
+            "data":"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\devenv.exe",
             "option":""
         },
         {
             "key":"visualstudio2017",
-            "location":"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\IDE\\devenv.exe",
+            "data":"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\IDE\\devenv.exe",
             "option":""
         },
         {
             "key":"vscode",
-            "location":"C:\\Users\\noTempo\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+            "data":"C:\\Users\\noTempo\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
             "option":""
         },
         {
             "key":"cmd",
-            "location":"C:\\Windows\\System32\\cmd.exe",
+            "data":"C:\\Windows\\System32\\cmd.exe",
             "option":""
         },
         {
             "key":"calc",
-            "location":"C:\\Windows\\WinSxS\\wow64_microsoft-windows-calc_31bf3856ad364e35_10.0.19041.1_none_6a03b910ee7a4073\\calc.exe",
+            "data":"C:\\Windows\\WinSxS\\wow64_microsoft-windows-calc_31bf3856ad364e35_10.0.19041.1_none_6a03b910ee7a4073\\calc.exe",
             "option":""
         },
         {
             "key":"nvexp",
-            "location":"C:\\Program Files\\NVIDIA Corporation\\NVIDIA GeForce Experience\\NVIDIA GeForce Experience.exe",
+            "data":"C:\\Program Files\\NVIDIA Corporation\\NVIDIA GeForce Experience\\NVIDIA GeForce Experience.exe",
             "option":""
         },
         {
             "key":"chrome",
-            "location":"C:\\program Files\\Google\\Chrome\\Application\\chrome.exe",
+            "data":"C:\\program Files\\Google\\Chrome\\Application\\chrome.exe",
             "option":""
         },
         {
             "key":"slack",
-            "location":"C:\\Users\\noTempo\\AppData\\Local\\slack\\slack.exe",
+            "data":"C:\\Users\\noTempo\\AppData\\Local\\slack\\slack.exe",
             "option":""
         }
     ],
     "f":[
         {
+            "key":"winapp",
+            "data":"D:\\data\\code\\winApp",
+            "option":""
+        },
+        {
+            "key":"download",
+            "data":"C:\\Users\\noTempo\\Downloads",
+            "option":""
+        },
+        {
             "key":"utilapp",
-            "location":"D:\\data\\utilApps",
+            "data":"D:\\data\\utilApps",
             "option":""
         },
         {
             "key":"fab",
-            "location":"\\\\asrx299\\data\\temp\\fab",
+            "data":"\\\\asrx299\\data\\temp\\fab",
             "option":""
         },
         {
             "key":"projects",
-            "location":"D:\\data\\projects",
+            "data":"D:\\data\\projects",
             "option":""
         },
         {
             "key":"viet",
-            "location":"D:\\data\\projects\\Viet",
+            "data":"D:\\data\\projects\\Viet",
             "option":""
         },
         {
             "key":"code",
-            "location":"D:\\data\\code",
+            "data":"D:\\data\\code",
             "option":""
         },
         {
             "key":"onenote",
-            "location":"D:\\data\\code",
+            "data":"D:\\data\\code",
             "option":""
         },
         {
             "key":"documents",
-            "location":"C:\\Users\\noTempo",
+            "data":"C:\\Users\\noTempo",
             "option":""
         },
         {
             "key":"startup",
-            "location":"D:\\data\\code",
+            "data":"D:\\data\\code",
             "option":""
         },
         {
             "key":"program",
-            "location":"C:\\Program Files",
+            "data":"C:\\Program Files",
             "option":""
         },
         {
             "key":"nasshare",
-            "location":"\\\\NAS453\\Public\\Share",
+            "data":"\\\\NAS453\\Public\\Share",
             "option":""
         },
         {
             "key":"bluetooth",
-            "location":"D:\\data\\code",
+            "data":"D:\\data\\code",
             "option":""
         },
         {
             "key":"device",
-            "location":"D:\\data\\code",
+            "data":"D:\\data\\code",
             "option":""
         },
         {
             "key":"nvexp",
-            "location":"C:\\Program Files\\NVIDIA Corporation\\NVIDIA GeForce Experience\\NVIDIA GeForce Experience.exe",
+            "data":"C:\\Program Files\\NVIDIA Corporation\\NVIDIA GeForce Experience\\NVIDIA GeForce Experience.exe",
             "option":""
         },
         {
             "key":"nvctrl",
-            "location":"D:\\data\\code",
+            "data":"D:\\data\\code",
             "option":""
         },
         {
             "key":"mouse",
-            "location":"D:\\data\\code",
+            "data":"D:\\data\\code",
             "option":""
         },
         {
             "key":"application",
-            "location":"D:\\data\\code",
+            "data":"D:\\data\\code",
             "option":""
         },
         {
             "key":"of112",
-            "location":"D:\\data\\code\\of_v0.11.2_vs2017_release",
+            "data":"D:\\data\\code\\of_v0.11.2_vs2017_release",
             "option":""
         },
         {
             "key":"touchosc",
-            "location":"C:\\Program Files\\TouchOSC\\TouchOSC.exe",
+            "data":"C:\\Program Files\\TouchOSC\\TouchOSC.exe",
             "option":""
         }
     ],
     "url":[
         {
             "key":"youtube",
-            "location":"https://www.youtube.com",
+            "data":"https://www.youtube.com",
             "option":""
         },
         {
             "key":"google",
-            "location":"https://www.google.com",
+            "data":"https://www.google.com",
             "option":""
         },
         {
             "key":"twitter",
-            "location":"https://twitter.com/home",
+            "data":"https://twitter.com/home",
             "option":""
         },
         {
             "key":"pinterest",
-            "location":"https://www.pinterest.jp/",
+            "data":"https://www.pinterest.jp/",
             "option":""
         },
         {
             "key":"amazon",
-            "location":"https://www.amazon.co.jp/",
+            "data":"https://www.amazon.co.jp/",
             "option":""
         },
         {
             "key":"amazonvideo",
-            "location":"https://www.amazon.co.jp/gp/browse.html?node=2351649051&ref_=nav_em__aiv_vid_0_2_2_2",
+            "data":"https://www.amazon.co.jp/gp/browse.html?node=2351649051&ref_=nav_em__aiv_vid_0_2_2_2",
             "option":""
         },
         {
             "key":"gmail",
-            "location":"https://mail.google.com/mail/",
+            "data":"https://mail.google.com/mail/",
             "option":""
         }
     ],
     "cmds":[
         {
             "key":"qres_2048",
-            "location":"D:\\data\\utilApps\\QRes\\QRes2048.bat",
+            "data":"D:\\data\\utilApps\\QRes\\QRes2048.bat",
             "option":""
         },
         {
             "key":"qres_4k",
-            "location":"D:\\data\\utilApps\\QRes\\QRes_4K.bat",
+            "data":"D:\\data\\utilApps\\QRes\\QRes_4K.bat",
             "option":""
         },
         {
             "key":"qres_24",
-            "location":"D:\\data\\utilApps\\QRes\\QRes_24.bat",
+            "data":"D:\\data\\utilApps\\QRes\\QRes_24.bat",
+            "option":""
+        }
+    ],
+    "txt":[
+        {
+            "key":"test1",
+            "data":"abcdefghijklmnopqrstuvwxyz",
+            "option":""
+        },
+        {
+            "key":"test2",
+            "data":"ABCDEFGHIJKLMNOPQRSTUV",
             "option":""
         }
     ]

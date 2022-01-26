@@ -4,57 +4,44 @@
 void ofApp::setup()
 {
 	ofSetFrameRate(60);
-	//ofSetEscapeQuitsApp(false);
-	ofSetLogLevel(OF_LOG_VERBOSE);
-	ofLogToFile("log.txt");
+	ofSetEscapeQuitsApp(false);
+	//ofSetLogLevel(OF_LOG_VERBOSE);
+	ofLogToFile("../log.txt");
 
-	appListJson = ofLoadJson("appList.json");
+	appListJson = ofLoadJson("../appList.json");
 	string cjs = appListJson.dump();
 	ofLog() << "dump : " << cjs;
 
-	ofLog() << "num apps " << appListJson["apps"].size();
-	for (int i = 0; i < appListJson["apps"].size();i++)
+	bLogNotice = appListJson["logNotice"].get<bool>();
+	if (bLogNotice)
 	{
-		appsLists.push_back(AppList());
-		appsLists.back().type = "app";
-		appsLists.back().name = appListJson["apps"][i]["key"].get<string>();
-		appsLists.back().location = appListJson["apps"][i]["location"].get<string>();
-		appsLists.back().option = appListJson["apps"][i]["option"].get<string>();
-
+		ofSetLogLevel(OF_LOG_NOTICE);
+		ofLog(OF_LOG_VERBOSE) << "OF_LOG_NOTICE";
 	}
-	ofLog() << "num folder list " << appsLists.size();
-	for (int i = 0; i < appListJson["f"].size(); i++)
+	else
 	{
-		folderLists.push_back(AppList());
-		folderLists.back().type = "folder";
-		folderLists.back().name = appListJson["f"][i]["key"].get<string>();
-		folderLists.back().location = appListJson["f"][i]["location"].get<string>();
-		folderLists.back().option = appListJson["f"][i]["option"].get<string>();
-
+		ofSetLogLevel(OF_LOG_VERBOSE);
+		ofLog(OF_LOG_VERBOSE) << "OF_LOG_VERBOSE";
 	}
-	ofLog() << "num folder Lists " << folderLists.size();
-	
-	ofLog() << "num URL list " << appsLists.size();
-	for (int i = 0; i < appListJson["url"].size(); i++)
+
+	vMuteState.push_back(false);
+	vMuteState.push_back(false);
+	volCache.push_back(0.0);
+	volCache.push_back(0.0);
+
+	for (int s = 0; s < appListJson["keyTypes"].size(); s++)
 	{
-		urlLists.push_back(AppList());
-		urlLists.back().type = "url";
-		urlLists.back().name = appListJson["url"][i]["key"].get<string>();
-		urlLists.back().location = appListJson["url"][i]["location"].get<string>();
-		urlLists.back().option = appListJson["url"][i]["option"].get<string>();
-
+		vKeyTypes.push_back(appListJson["keyTypes"][s].get<string>());
+		dataLists.push_back(vector<DataList>());
+		for (int i = 0; i < appListJson[vKeyTypes.back()].size(); i++)
+		{
+			dataLists.back().push_back(DataList());
+			dataLists.back().back().type = vKeyTypes.back();
+			dataLists.back().back().name = appListJson[vKeyTypes.back()][i]["key"].get<string>();
+			dataLists.back().back().data = appListJson[vKeyTypes.back()][i]["data"].get<string>();
+			dataLists.back().back().option = appListJson[vKeyTypes.back()][i]["option"].get<string>();
+		}
 	}
-	ofLog() << "num URL Lists " << folderLists.size();
-
-	for (int i = 0; i < appListJson["cmds"].size(); i++)
-	{
-		cmdsLists.push_back(AppList());
-		cmdsLists.back().type = "cmd";
-		cmdsLists.back().name = appListJson["cmds"][i]["key"].get<string>();
-		cmdsLists.back().location = appListJson["cmds"][i]["location"].get<string>();
-		cmdsLists.back().option = appListJson["cmds"][i]["option"].get<string>();
-	}
-	ofLog() << "num cmdsLists " << cmdsLists.size();
 
 	ofLog() << appListJson["targets"].size();
 	for (int i = 0; i < appListJson["targets"].size(); i++)
@@ -75,6 +62,8 @@ void ofApp::setup()
 	// listen on the given port
 	ofLog() << "listening for osc messages on port " << listeningPort;
 	receiver.setup(listeningPort);
+
+	setDeviceVol(0.0, eCapture, MUTE_GET);
 }
 
 //--------------------------------------------------------------
@@ -88,35 +77,35 @@ void ofApp::update()
 
 		if (windowName != pWindowName)
 		{
-			ofLog() << "WTXT : " << windowName;
+			ofLog(OF_LOG_VERBOSE) << "WTXT : " << windowName;
 			//ofLog() << "Blender :" << windowName.find("Blender");
 			//ofLog() << "Houdini :" << windowName.find("Houdini");
 			if (windowName.find("Blender") < 1000000)
 			{
 				ofxOscMessage m;
 				m.setAddress("/pager");
-				m.addInt32Arg(3);
+				m.addInt32Arg(2);
 				sendOSC(m);
-				currentPage = 3;
-				ofLog() << "change 2 blender";
+				currentPage = 2;
+				ofLog(OF_LOG_VERBOSE) << "change 2 blender";
 			}
 			else if (windowName.find("Houdini") < 1000000)
 			{
 				ofxOscMessage m;
 				m.setAddress("/pager");
-				m.addInt32Arg(4);
+				m.addInt32Arg(3);
 				sendOSC(m);
-				currentPage = 4;
-				ofLog() << "change 2 HoudiniFX";
+				currentPage = 3;
+				ofLog(OF_LOG_VERBOSE) << "change 2 HoudiniFX";
 			}
 			else if (windowName.find("Unreal") < 1000000)
 			{
 				ofxOscMessage m;
 				m.setAddress("/pager");
-				m.addInt32Arg(6);
+				m.addInt32Arg(5);
 				sendOSC(m);
-				currentPage = 6;
-				ofLog() << "change 2 Unreal";
+				currentPage = 5;
+				ofLog(OF_LOG_VERBOSE) << "change 2 Unreal";
 			}
 			else
 			{
@@ -127,11 +116,37 @@ void ofApp::update()
 					m.addInt32Arg(defaultPage);
 					sendOSC(m);
 					currentPage = defaultPage;
-					ofLog() << "change 2 deafault pageNUum = " << defaultPage;
+					ofLog(OF_LOG_VERBOSE) << "change 2 deafault pageNUum = " << defaultPage;
 				}
 			}
 		}
 		pWindowName = windowName;
+	}
+	// aliving check
+	if (ofGetFrameNum() % 500 == 0)
+	{
+		setDeviceVol(0.0, eRender, MUTE_GET);
+		ofxOscMessage m;
+		m.setAddress("/slive");
+		m.addBoolArg(vMuteState[0]);
+		sendOSC(m);
+	}
+	else if(ofGetFrameNum() % 500 == 250)
+	{
+		setDeviceVol(0.0, eCapture, MUTE_GET);
+		ofxOscMessage m;
+		m.setAddress("/mlive");
+		m.addBoolArg(vMuteState[1]);
+		sendOSC(m);
+	}
+	// just alive Connection
+	if (ofGetFrameNum() % 300 == 100)
+	{
+		setDeviceVol(0.0, eCapture, MUTE_GET);
+		ofxOscMessage m;
+		m.setAddress("/alive");
+		m.addBoolArg(vMuteState[1]);
+		sendOSC(m);
 	}
 
 	// hide old messages
@@ -142,7 +157,8 @@ void ofApp::update()
 	}
 
 	// check for waiting messages
-	while(receiver.hasWaitingMessages()){
+	while(receiver.hasWaitingMessages())
+	{
 
 		// get the next message
 		ofxOscMessage m;
@@ -153,28 +169,67 @@ void ofApp::update()
 		string mAdr = mAdr2 = m.getAddress();
 		vector<string> &vMsg = ofSplitString(mAdr, "_");
 
-		if(vMsg[0] == "/key"){
-			ofLog() << "key : " << mAdr;
+		if (vMsg[0] == "/xy1" || vMsg[0] == "/xy2" || vMsg[0] == "/multixy/1")
+		{
+			POINT cMSPos;
+			GetCursorPos(&cMSPos);
+			//			ofLog() << "MS pos " <<  << " " << cMSPos.x << " : " << cMSPos.y;
+			float scale = 750;
+			float cTime = ofGetElapsedTimef();
+			float cx = cMSPos.x + 2.0 * scale * (m.getArgAsFloat(0) - 0.5);
+			float cy = cMSPos.y + scale * (m.getArgAsFloat(1) - 0.5);
+			bool bCtouch = m.getArgAsBool(2);
+			if (setcounter % 2 == 1)
+			{
+				if (setcounter == 3)
+				{
+					touchinject(cx, cy, 1);
+					//ofLog() << "MK ONE_ xy In : " << cx << " , " << cy << " : " << mk1TouchStaet;
+				}
+				else if (setcounter > 3)
+				{
+					touchinject(cx, cy, 2);
+					//ofLog() << "MK ONE_ xy update : " << cx << " , " << cy << " : " << mk1TouchStaet;
+				}
+				px = cx;
+				py = cy;
+				setcounter++;
+			}
+			else
+			{
+				setcounter++;
+			}
+
+			if (bPTouch != bCtouch && !bCtouch)
+			{
+				touchinject(cx, cy, 0);
+				//ofLog() << "MK ONE_ xy OUT : " << cx << " , " << cy << " : " << mk1TouchStaet;
+				setcounter = 0;
+			}
+			bPTouch = bCtouch;
+		}
+		else if (vMsg[0] == "/key") {
+			ofLog(OF_LOG_VERBOSE) << "key : " << mAdr;
 			applyMessage(vMsg);
 		}
 		else if (vMsg[0] == "/app")
 		{
-			ofLog() << "que ==> " << vMsg[1];
-			queSystem(appsLists, vMsg[1]);
+			ofLog(OF_LOG_VERBOSE) << "que ==> " << vMsg[1];
+			queSystem(dataLists[TYPE_APP], vMsg[1]);
 		}
 		else if (vMsg[0] == "/f")
 		{
-			ofLog() << "que ==> " << vMsg[1];
-			queSystem(folderLists, vMsg[1]);
+			ofLog(OF_LOG_VERBOSE) << "que ==> " << vMsg[1];
+			queSystem(dataLists[TYPE_FOLDER], vMsg[1]);
 		}
 		else if (vMsg[0] == "/url")
 		{
-			ofLog() << "que ==> " << vMsg[1];
-			queSystem(urlLists, vMsg[1], defaultBrowserLocation);
+			ofLog(OF_LOG_VERBOSE) << "que ==> " << vMsg[1];
+			queSystem(dataLists[TYPE_URL], vMsg[1], defaultBrowserLocation);
 		}
 		else if (vMsg[0] == "/cmd")
 		{
-			ofLog() << "command : " << mAdr;
+			ofLog(OF_LOG_VERBOSE) << "command : " << mAdr;
 			if (vMsg[1] == "qres")
 			{
 				if (vMsg[2] == "s")int a = system("\"C:\\Windows\\System32\\cmd.exe /c D:\\data\\utilApps\\QRes\\QRes2048.bat\"");
@@ -185,38 +240,123 @@ void ofApp::update()
 		else if (vMsg[0] == "/encoderLR")
 		{
 		}
-		else if (vMsg[0] == "/xy1"|| vMsg[0] == "/group5/1")
+		else if (vMsg[0] == "/hou")
 		{
-			INPUT inputs[1];
-
-			ZeroMemory(inputs, sizeof(inputs));
-			
-			//float x = 
-
-			inputs[0].type = INPUT_MOUSE;
-			inputs[0].mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-			inputs[0].mi.dx = 65536 * (m.getArgAsFloat(0));// -0.5);
-			inputs[0].mi.dy = 65536 * (m.getArgAsFloat(1));// -0.5);
-			ofLog() << "dx = " << inputs[0].mi.dx;
-			ofLog() << "dx = " << inputs[0].mi.dy;
-			inputs[0].mi.mouseData = 0;
+			vector<string> cvStr;
+			cvStr.push_back("");
+			cvStr.push_back("");
+			cvStr.push_back("tab");
+			applyMessage(cvStr);
 			ofSleepMillis(5);
-		
+			for (int i = 0; i < vMsg[1].length(); i++)
+			{
+				cvStr[2] = vMsg[1].at(i);
+				applyMessage(cvStr);
+			}
+			ofLog(OF_LOG_VERBOSE) << "================================== Hou : " << vMsg[1];
+			cvStr[2] = ("enter");
+			applyMessage(cvStr);
+		}
+		else if (vMsg[0] == "/txt")
+		{
+			vector<string> cvStr;
+			cvStr.push_back("");
+			cvStr.push_back("");
+			cvStr.push_back("");
+			stringPast(dataLists[TYPE_TXT], vMsg[1]);
+			cvStr[1] = "C";
+			cvStr[2] = "v";
+			applyMessage(cvStr);
+		}
+		else if (vMsg[0] == "/3/xy/z")
+		{
+			bool bCtouch = bool(m.getArgAsBool(0));
+			mk1TouchStaet = bCtouch;
 
-			UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+			// UP
+			if (!bCtouch)
+			{
+				mk1TouchStaet = 0;
+				startPos = ofVec2f(0.0, 0.0);
+				touchinject(px, py, 0);
+				ofLog(OF_LOG_VERBOSE) << "MK ONE_ xy out :";
+			}
+		}
+		else if (vMsg[0] == "/3/xy")
+		{
+			float scale = 900;
+
+			POINT cMSPos;
+			GetCursorPos(&cMSPos);
+			ofVec2f checkPos = ofVec2f(m.getArgAsFloat(0), m.getArgAsFloat(1));
+			float cx = cMSPos.x + 2.0 * (scale * (checkPos.x - startPos.x));
+			float cy = cMSPos.y + (scale * (checkPos.y - startPos.y));
+
+			if (mk1TouchStaet==1)
+			{
+				startPos = checkPos;
+				cx = cMSPos.x;
+				cy = cMSPos.y;
+				touchinject(cx, cy, 1);
+				ofLog(OF_LOG_VERBOSE) << "MK ONE_ xy In : " << cx << " , " << cy << " : " << mk1TouchStaet;
+				mk1TouchStaet += 1;
+			}
+			touchinject(cx, cy, 2);
+			ofLog(OF_LOG_VERBOSE) << "MK ONE_ xy update : " << cx << " , " << cy << " : " << mk1TouchStaet;
+
+			px = cx;
+			py = cy;
 		}
 		else if (vMsg[0] == "/sys")
 		{
-			if(vMsg[1] == "snd")
-			if (vMsg[2] == "spk")
+			if (vMsg[1] == "snd")
 			{
-				setOutputDeviceVol(m.getArgAsFloat(0));
+				if (vMsg[2] == "spk")
+				{
+					volCache[0] = m.getArgAsFloat(0);
+					setDeviceVol(volCache[0], eRender);
+				}
+				else if (vMsg[2] == "mic")
+				{
+					volCache[1] = m.getArgAsFloat(0);
+					setDeviceVol(volCache[1], eCapture);
+				}
+				else if (vMsg[2] == "smute")
+				{
+					bool bmm = m.getArgAsFloat(0);
+					MUTETYPE MT = bmm ? MUTE_SET_FALSE : MUTE_SET_TRUE;
+					ofLog(OF_LOG_VERBOSE) << "smute " << bmm;
+					setDeviceVol(volCache[0], eRender, MT);
+					ofxOscMessage m;
+					m.setAddress("/slive");
+					m.addBoolArg(vMuteState[eRender]);
+					sendOSC(m);
+				}
+				else if (vMsg[2] == "mmute")
+				{
+					bool bmm = m.getArgAsFloat(0);
+					MUTETYPE MT = bmm ? MUTE_SET_FALSE : MUTE_SET_TRUE;
+					ofLog(OF_LOG_VERBOSE) << "mmute " << bmm;
+					setDeviceVol(volCache[1], eCapture, MT);
+					ofxOscMessage m;
+					m.setAddress("/mlive");
+					m.addBoolArg(vMuteState[eCapture]);
+					sendOSC(m);
+				}
+				else
+				{
+					ofLog(OF_LOG_VERBOSE) << "unknow device name" << vMsg[2];
+				}
 			}
 		}
 		else if (vMsg[0] == "/ping")
 		{
-			ofLog() << "ping c : " << ofGetTimestampString();
+			ofLog(OF_LOG_VERBOSE) << "ping c : " << ofGetTimestampString();
 		}
+		else if (vMsg[0] == "/req_spkv")
+		{ }
+		else if (vMsg[0] == "/req_micv")
+		{ }
 		else 
 		{
 
@@ -251,7 +391,7 @@ void ofApp::update()
 			timers[currentMsgString] = ofGetElapsedTimef() + 5.0f;
 			currentMsgString = (currentMsgString + 1) % NUM_MSG_STRINGS;
 
-			ofLog() << msgString;
+			ofLog(OF_LOG_VERBOSE) << msgString;
 
 			// clear the next line
 			msgStrings[currentMsgString] = "";
@@ -322,7 +462,15 @@ void ofApp::keyReleased(int key){
 	}
 	else if (key == 'v')
 	{
-		setOutputDeviceVol(0.4);
+		setDeviceVol(0.4, eRender);
+	}
+	else if (key == 'm')
+	{
+		setDeviceVol(0.4, eCapture);
+	}
+	else if (key == 't')
+	{
+		//touchinject(640, 480);
 	}
 
 }
@@ -376,7 +524,7 @@ void ofApp::applyMessage(vector<string> &_msg)
 {
 	for (int i = 0; i < _msg.size(); i++)
 	{
-		printf("%s_", _msg[i]);
+		ofLog(OF_LOG_VERBOSE) << _msg[i];
 	}
 
 	unsigned int numKey = (_msg.size()-1 + _msg[1].length()) * 2;
@@ -411,7 +559,7 @@ void ofApp::applyMessage(vector<string> &_msg)
 	UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
 	if (uSent != ARRAYSIZE(inputs))
 	{
-		ofLog() << "failed";
+		ofLog(OF_LOG_VERBOSE) << "failed";
 	}
 }
 
@@ -420,11 +568,11 @@ void ofApp::applyModKeys(INPUT *_inputs, string _msg, int &_step, bool _rise)
 	string cMsg = _msg;
 	if (!_rise)
 	{
-		ofLog() << "down " << cMsg;
+		ofLog(OF_LOG_VERBOSE) << "down " << cMsg;
 	}
 	else
 	{
-		ofLog() << "UP " << cMsg;
+		ofLog(OF_LOG_VERBOSE) << "UP " << cMsg;
 	}
 
 	string sid[4];
@@ -446,11 +594,11 @@ void ofApp::applyModKeys(INPUT *_inputs, string _msg, int &_step, bool _rise)
 	{
 		int p = -1;
 		p = _msg.find(sid[i]);
-		//ofLog() << i <<" : p = " << p;
+		ofLog(OF_LOG_VERBOSE) << i <<" : p = " << p;
 		if (p!=-1)
 		{
 			_msg.erase(p, 1);
-			//ofLog() << "p=" << p << " step=" << _step << " " << &(_inputs[_step]);
+			ofLog(OF_LOG_VERBOSE) << "p=" << p << " step=" << _step << " " << &(_inputs[_step]);
 			modWork(&(_inputs[_step]), sid[i], _rise);
 			_step++;
 		}
@@ -465,7 +613,7 @@ void ofApp::modWork(INPUT *_input, string _str, bool _rise)
 	else if (_str == "A") { modType = VK_MENU; }
 	else if (_str == "S") { modType = VK_SHIFT; }
 
-	ofLog() << "<mod> modType = 0x" << std::hex << modType << "RISE " << _rise;
+	ofLog(OF_LOG_VERBOSE) << "<mod> modType = 0x" << std::hex << modType << "RISE " << _rise;
 
 	_input->type = INPUT_KEYBOARD;
 	_input->ki.wVk = modType;
@@ -522,7 +670,7 @@ void ofApp::applyKeys(INPUT *_inputs, string str, int &_step, bool extended)
 		else if (str == "num8")key = VK_NUMPAD8;
 		else if (str == "num9")key = VK_NUMPAD9;
 	}
-	ofLog() << "=======>> Key = 0x" << std::hex << key;
+	ofLog(OF_LOG_VERBOSE) << "=======>> Key = 0x" << std::hex << key;
 
 	_inputs[_step].type = INPUT_KEYBOARD;
 	_inputs[_step].ki.wVk = key;
@@ -548,16 +696,16 @@ void ofApp::applyKeys(INPUT *_inputs, string str, int &_step, bool extended)
 	ofSleepMillis(5);
 }
 
-int ofApp::findAppList(vector<AppList> &_lists, string _key, AppList &_app)
+int ofApp::findAppList(vector<DataList> &_lists, string _key, DataList &_app)
 {
-	ofLog() << "LIST SIZE " << _lists.size();
+	ofLog(OF_LOG_VERBOSE) << "LIST SIZE " << _lists.size();
 	for (int i=0;i<_lists.size();i++)
 	{
-		AppList &list = _lists[i];
-		ofLog() << "list name = " << list.name << "   _key = " << _key;
+		DataList &list = _lists[i];
+		ofLog(OF_LOG_VERBOSE) << "list name = " << list.name << "   _key = " << _key;
 		if (list.name == _key)
 		{
-			ofLog() << "find key " << list.name;
+			ofLog(OF_LOG_VERBOSE) << "find key " << list.name;
 			_app = list;
 			return 1;
 		}
@@ -566,10 +714,10 @@ int ofApp::findAppList(vector<AppList> &_lists, string _key, AppList &_app)
 	return -1;
 }
 
-void ofApp::queSystem(vector<AppList> &_lists, string _key, string _cmd)
+void ofApp::queSystem(vector<DataList> &_lists, string _key, string _cmd)
 {
-	ofLog() << "_key " << _key;
-	AppList appData;
+	ofLog(OF_LOG_VERBOSE) << "_key " << _key;
+	DataList appData;
 	int num = findAppList(_lists, _key, appData);
 	
 	if (num > 0)
@@ -577,14 +725,31 @@ void ofApp::queSystem(vector<AppList> &_lists, string _key, string _cmd)
 		stringstream cmd;
 		if (_cmd == "start")
 		{
-			cmd << _cmd << "" << appData.location;
+			cmd << _cmd << " " << appData.data;
 		}
 		else
 		{
-			cmd << _cmd << " " << "\"" << appData.location << "\"" << " ";
+			cmd << _cmd << " \"" << appData.data << "\"" << " ";
 		}
 		int a = system(cmd.str().c_str());
-		ofLog() << "app name : " << appData.name << " : " << cmd.str().c_str();
+		ofLog(OF_LOG_VERBOSE) << "app name : " << appData.name << " : " << cmd.str().c_str();
+	}
+}
+
+void ofApp::stringPast(vector<DataList> &_lists, string _key)
+{
+	ofLog(OF_LOG_VERBOSE) << "string::_key " << _key;
+	DataList appData;
+	int num = findAppList(_lists, _key, appData);
+
+	if (num > 0)
+	{
+		vector<string> cvStr;
+		cvStr.resize(3,"");
+		setClipboardText(appData.data.c_str());
+		cvStr[1] = "C";
+		cvStr[2] = "v";
+		applyMessage(cvStr);
 	}
 }
 
@@ -594,97 +759,6 @@ void ofApp::sendOSC(ofxOscMessage &m)
 	{
 		senders[i].sendMessage(m);
 	}
-}
-
-void ofApp::setOutputDeviceVol(float _vol)
-{
-	HRESULT hr;
-	IMMDeviceEnumerator *pEnum = NULL;
-	IMMDeviceCollection *pDevices = NULL;
-
-	//// UNICODE set input locales
-	setlocale(LC_ALL, "");
-	hr = CoInitializeEx(0, COINIT_MULTITHREADED);
-	// MMDevice
-	hr = CoCreateInstance(__uuidof(MMDeviceEnumerator),
-		NULL, CLSCTX_ALL, IID_PPV_ARGS(&pEnum));
-	if (FAILED(hr))
-	{
-		CoUninitialize();
-		ofLog() << "get failed";
-	}
-	// IMMDevice out put active devices
-	hr = pEnum->EnumAudioEndpoints(eRender, DEVICE_STATE_ACTIVE, &pDevices);
-	UINT count, n;
-	pDevices->GetCount(&count);	// IMMDevice num
-	for (n = 0; n < count; n++)
-	{
-		PROPVARIANT vName;
-		IMMDevice *pEndpoint;
-		IPropertyStore *pProperties;
-		IAudioEndpointVolume *pAudioEndVol = NULL;
-		IAudioInputSelector *pAudioInput_u;
-		pDevices->Item(n, &pEndpoint);
-		pEndpoint->OpenPropertyStore(STGM_READ, &pProperties);
-		PropVariantInit(&vName);
-		pProperties->GetValue(PKEY_Device_FriendlyName, &vName);
-		wprintf(L"%u : %s ", n, vName.pwszVal);
-		PropVariantClear(&vName);
-		// create volume objects
-		hr = pEndpoint->Activate(__uuidof(IAudioEndpointVolume),
-			CLSCTX_ALL, NULL, (void **)&pAudioEndVol);
-		if (FAILED(hr))
-		{
-			if (pDevices)
-				pDevices->Release();
-			if (pEnum)
-				pEnum->Release();
-			CoUninitialize();
-			ofLog() << "failed to Create volume objects...";
-		}
-		// getVol
-		float getVol;
-		hr = pAudioEndVol->GetMasterVolumeLevelScalar(&getVol);
-		hr = pAudioEndVol->SetMasterVolumeLevelScalar(_vol, 0);
-		if (FAILED(hr))
-		{
-			if (pAudioEndVol)
-				pAudioEndVol->Release();
-			if (pDevices)
-				pDevices->Release();
-			if (pEnum)
-				pEnum->Release();
-			CoUninitialize();
-			ofLog() << "faile to get Volume.";
-		}
-		printf(" %.2f\n", double(getVol));
-		if (pAudioEndVol)
-			pAudioEndVol->Release();
-	}
-	if (pDevices)
-		pDevices->Release();
-	if (pEnum)
-		pEnum->Release();
-	
-	CoUninitialize();
-
-	//////////////////////////////////////////////////////////////////////
-	//IDeviceTopology  *pDevTopoEndpt = NULL;
-	//hr = pDevice->Activate(
-	//	__uuidof(IDeviceTopology), CLSCTX_ALL, NULL, (void**)&pDevTopoEndpt);
-
-	//// The device topology for an endpoint device always
-	//// contains just one connector (connector number 0).
-	//IConnector  *pConnEndpt = NULL;
-	//hr = pDevTopoEndpt->GetConnector(0, &pConnEndpt);
-
-	//IConnector  *pConnHWDev = NULL;
-	//hr = pConnEndpt->GetConnectedTo(&pConnHWDev);
-
-	//// Query the connector in the audio hardware device for
-	//// its IPart interface.
-	//IPart  *pPartConn = NULL;
-	//hr = pConnHWDev->QueryInterface(__uuidof(IPart), (void**)&pPartConn);
 }
 
 wstring ofApp::multi_to_wide_winapi(std::string const& src)
@@ -700,9 +774,196 @@ wstring ofApp::multi_to_wide_winapi(std::string const& src)
 	return std::wstring(dest.begin(), dest.end());
 }
 
-void ofApp::setInputDeviceVol(float _vol)
+void ofApp::setDeviceVol(float _vol, EDataFlow _type, MUTETYPE _mute)
 {
+	HRESULT hr;
+	IMMDeviceEnumerator *pEnum = NULL;
+	IMMDeviceCollection *pDevices = NULL;
+
+	//// UNICODE set input locales
+	setlocale(LC_ALL, "");
+	hr = CoInitializeEx(0, COINIT_MULTITHREADED);
+	// MMDevice
+	hr = CoCreateInstance(__uuidof(MMDeviceEnumerator),
+		NULL, CLSCTX_ALL, IID_PPV_ARGS(&pEnum));
+	if (FAILED(hr))
+	{
+		CoUninitialize();
+		ofLog(OF_LOG_VERBOSE) << "get failed";
+	}
+	// IMMDevice out put active devices
+	hr = pEnum->EnumAudioEndpoints(_type, DEVICE_STATE_ACTIVE, &pDevices);
+	UINT count, n;
+	pDevices->GetCount(&count);	// IMMDevice num
+	int deviceType = (_type == eRender)? 0 : 1;
+
+	for (n = 0; n < count; n++)
+	{
+		PROPVARIANT vName;
+		IMMDevice *pEndpoint;
+		IPropertyStore *pProperties;
+		IAudioEndpointVolume *pAudioEndVol = NULL;
+
+		pDevices->Item(n, &pEndpoint);
+		pEndpoint->OpenPropertyStore(STGM_READ, &pProperties);
+		PropVariantInit(&vName);
+		pProperties->GetValue(PKEY_Device_FriendlyName, &vName);
+		//wprintf(L"%u : %s ", n, vName.pwszVal);
+		PropVariantClear(&vName);
+		// create volume objects
+		hr = pEndpoint->Activate(__uuidof(IAudioEndpointVolume), CLSCTX_ALL, NULL, (void **)&pAudioEndVol);
+		if (FAILED(hr))
+		{
+			if (pDevices)
+				pDevices->Release();
+			if (pEnum)
+				pEnum->Release();
+			CoUninitialize();
+			ofLog() << "failed to Create volume objects...";
+		}
+
+		float getVol;
+		hr = pAudioEndVol->GetMasterVolumeLevelScalar(&getVol);
+
+		// mute
+		if (_mute != MUTE_IGNORE)
+		{
+			BOOL pbGetMute;
+			hr = pAudioEndVol->GetMute(&pbGetMute);
+			vMuteState[deviceType] = pbGetMute;
+			if (_mute == MUTE_GET)
+			{
+				vMuteState[deviceType] = pbGetMute;
+			}
+			else if (_mute == MUTE_SET_TRUE)
+			{
+				cout << "set mute true" << endl;
+				vMuteState[deviceType] = true;
+				pAudioEndVol->SetMute(vMuteState[deviceType], NULL);
+			}
+			else if (_mute == MUTE_SET_FALSE)
+			{
+				cout << "set mute false" << endl;
+				vMuteState[deviceType] = false;
+				pAudioEndVol->SetMute(vMuteState[deviceType], NULL);
+			}
+			else
+			{
+				vMuteState[deviceType] = !pbGetMute;
+				pAudioEndVol->SetMute(vMuteState[deviceType], NULL);
+				ofLog(OF_LOG_VERBOSE) << "mute state : devType : " << deviceType << " : " << vMuteState[deviceType];
+			}
+			ofLog(OF_LOG_VERBOSE) << "Type" << _type << " : Mute state       : " << pbGetMute;
+			ofLog(OF_LOG_VERBOSE) << "Type" << _type << " : Mute state Cache : " << vMuteState[deviceType];
+		}
+
+		// set Volume
+		if (_mute == MUTE_IGNORE || _mute != MUTE_GET)
+		{
+			volCache[deviceType] = _vol;
+			hr = pAudioEndVol->SetMasterVolumeLevelScalar(_vol, 0);
+		}
+		if (FAILED(hr))
+		{
+			if (pAudioEndVol)
+				pAudioEndVol->Release();
+			if (pDevices)
+				pDevices->Release();
+			if (pEnum)
+				pEnum->Release();
+			CoUninitialize();
+			ofLog(OF_LOG_VERBOSE) << "faile to get Volume.";
+		}
+		ofLog(OF_LOG_VERBOSE) << "VOL -- " << double(getVol);
+
+		if (pAudioEndVol)
+			pAudioEndVol->Release();
+	}
+	if (pDevices)
+		pDevices->Release();
+	if (pEnum)
+		pEnum->Release();
+
+	CoUninitialize();
 
 }
 
+void ofApp::setClipboardText(const char *text) {
+	int size = ::MultiByteToWideChar(CP_UTF8, 0, text, -1, nullptr, 0);
+	if (size < 0) {
+		return;
+	}
 
+	if (::OpenClipboard(NULL)) {
+		::EmptyClipboard();
+		HGLOBAL hGlobal = ::GlobalAlloc(GMEM_ZEROINIT | GMEM_MOVEABLE | GMEM_DDESHARE, (size + 1) * sizeof(WCHAR));
+		if (hGlobal != NULL) {
+			LPWSTR lpszData = (LPWSTR)::GlobalLock(hGlobal);
+			if (lpszData != nullptr) {
+				::MultiByteToWideChar(CP_UTF8, 0, text, -1, lpszData, size);
+				::GlobalUnlock(hGlobal);
+				::SetClipboardData(CF_UNICODETEXT, hGlobal);
+			}
+		}
+		::CloseClipboard();
+	}
+}
+
+
+//(
+//	_In_ HINSTANCE hInstance,
+//	_In_opt_ HINSTANCE hPrevInstance,
+//	_In_ LPSTR lpCmdLine,
+//	_In_ int nShowCmd)
+void ofApp::touchinject(int _x, int _y, int _bTouch)
+{
+	POINTER_TOUCH_INFO contact;
+	BOOL bRet = TRUE;
+
+	//
+	// assume a maximum of 10 contacts and turn touch feedback off
+	//
+	if(_bTouch==1)
+		InitializeTouchInjection(10, TOUCH_FEEDBACK_NONE);
+
+	//
+	// initialize the touch info structure
+	//
+	memset(&contact, 0, sizeof(POINTER_TOUCH_INFO));
+
+	contact.pointerInfo.pointerType = PT_TOUCH; //we're sending touch input
+	contact.pointerInfo.pointerId = 0;          //contact 0
+	contact.pointerInfo.ptPixelLocation.x = _x;
+	contact.pointerInfo.ptPixelLocation.y = _y;
+	//contact.pointerInfo.pointerFlags = POINTER_FLAG_DOWN | POINTER_FLAG_INRANGE | POINTER_FLAG_INCONTACT;
+	if (_bTouch==1)
+	{
+		contact.pointerInfo.pointerFlags = POINTER_FLAG_DOWN | POINTER_FLAG_INRANGE | POINTER_FLAG_INCONTACT;
+	}
+	else if (_bTouch == 2)
+	{
+		contact.pointerInfo.pointerFlags = POINTER_FLAG_UPDATE | POINTER_FLAG_INRANGE | POINTER_FLAG_INCONTACT;
+	}
+	else
+	{
+		contact.pointerInfo.pointerFlags = POINTER_FLAG_UP;
+	}
+	contact.touchFlags = TOUCH_FLAG_NONE;
+	contact.touchMask = TOUCH_MASK_CONTACTAREA | TOUCH_MASK_ORIENTATION | TOUCH_MASK_PRESSURE;
+	contact.orientation = 90;
+	contact.pressure = 32000;
+
+	//
+	// set the contact area depending on thickness
+	//
+	contact.rcContact.top = _x - 2;
+	contact.rcContact.bottom = _x + 2;
+	contact.rcContact.left = _y - 2;
+	contact.rcContact.right = _y + 2;
+
+	//
+	// inject a touch down
+	//
+	InjectTouchInput(1, &contact);
+
+}

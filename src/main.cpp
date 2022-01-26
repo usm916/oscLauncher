@@ -1,27 +1,10 @@
-//#include <windows.h>
-//
 #include "ofMain.h"
 #include "ofApp.h"
 #include "ofAppNoWindow.h"
-//
-////#include "tray_windows.c"
-//
-////========================================================================
-//int main() {
-//	ofAppNoWindow window;
-//	ofSetupOpenGL(&window, 1024, 768, OF_WINDOW);
-//	//ofSetupOpenGL(1280, 720, OF_WINDOW); // <-------- setup the GL context
-//	ShowWindow(GetConsoleWindow(), SW_HIDE);
-//	// this kicks off the running of my app
-//	// can be OF_WINDOW or OF_FULLSCREEN
-//	// pass in width and height too:
-//	ofRunApp(new ofApp());
-//}
 
 #include <stdio.h>
 #include <string.h>
 #include <windows.h>
-
 
 #if defined (_WIN32) || defined (_WIN64)
 #define TRAY_WINAPI 1
@@ -30,6 +13,8 @@
 #elif defined (__APPLE__) || defined (__MACH__)
 #define TRAY_APPKIT 1
 #endif
+
+//#define USE_INPUT
 
 #include "tray_windows.c"
 #include <thread>
@@ -47,13 +32,6 @@
 #endif
 
 static struct tray ctray;
-//static struct 
-//class CTray {
-//public:
-//	CTray() {};
-//	~CTray() {};
-//	
-//	tray ctray;
 
 static void toggle_cb(struct tray_menu* item) {
 		printf("toggle cb\n");
@@ -73,6 +51,22 @@ static 	void hello_cb(struct tray_menu* item) {
 	tray_update(&ctray);
 }
 
+static 	void openlog_cb(struct tray_menu* item) {
+	(void)item;
+	stringstream ss;
+	ss << "explorer log.txt";
+	system(ss.str().c_str());
+	tray_update(&ctray);
+}
+
+static 	void editKeys_cb(struct tray_menu* item) {
+	(void)item;
+	stringstream ss;
+	ss << "explorer appList.json";
+	system(ss.str().c_str());
+	tray_update(&ctray);
+}
+
 static 	void quit_cb(struct tray_menu* item) {
 	ofExit();
 	(void)item;
@@ -85,7 +79,6 @@ void submenu_cb(struct tray_menu* item) {
 	printf("submenu: clicked on %s\n", item->text);
 	tray_update(&ctray);
 }
-//};
 
 // Test tray init
 //static struct tray tray;
@@ -127,60 +120,72 @@ void submenu_cb(struct tray_menu* item) {
 //            {.text = NULL}},
 //};
 
-int _main() {
+int _main()
+{
+#ifdef USE_INPUT
+	ofSetupOpenGL(1024, 768, OF_WINDOW);
+#else
 	ofAppNoWindow window;
 	ofSetupOpenGL(&window, 1024, 768, OF_WINDOW);
-	//ShowWindow(GetConsoleWindow(), SW_HIDE);
-	//ofSetupOpenGL(1280, 720, OF_WINDOW);
-
+#endif
 	return ofRunApp(new ofApp());
 }
 
-int main() {
+int main()
+{
 	//CTray cTray;
 	cout << "strat main()" << endl;
 
-    tray_menu tr[5];
+    tray_menu tr[6];
 
-	tr[0].text = "Hello World with task tray!";
+	tr[0].text = "Hello World with task tray !";
 	tr[0].cb = hello_cb;
-	tr[0].disabled = 0;
+	tr[0].disabled = 1;
 	tr[0].checked = 0;
 	tr[0].checkbox = 0;
-	//tr[0].context;
 	tr[0].submenu = NULL;
 
-	tr[1].text = "toggle checking!";
+	tr[1].text = "Open log";
+	tr[1].cb = openlog_cb;
 	tr[1].disabled = 0;
-	tr[1].checked = 1;
-	tr[1].checkbox = 1;
-    tr[1].cb = toggle_cb;
+	tr[1].checked = 0;
+	tr[1].checkbox = 0;
 	tr[1].submenu = NULL;
 
-	tr[2].text = "-";
+	tr[2].text = "Open Json Editor";
+	tr[2].cb = editKeys_cb;
 	tr[2].disabled = 0;
 	tr[2].checked = 0;
 	tr[2].checkbox = 0;
 	tr[2].submenu = NULL;
 
-	tr[3].text = "Quit";
+	tr[3].text = "-";
 	tr[3].disabled = 0;
 	tr[3].checked = 0;
 	tr[3].checkbox = 0;
-	tr[3].cb = quit_cb;
 	tr[3].submenu = NULL;
 
-	tr[4].text = NULL;
+	tr[4].text = "Quit";
 	tr[4].disabled = 0;
 	tr[4].checked = 0;
 	tr[4].checkbox = 0;
+	tr[4].cb = quit_cb;
 	tr[4].submenu = NULL;
+
+	tr[5].text = NULL;
+	tr[5].disabled = 0;
+	tr[5].checked = 0;
+	tr[5].checkbox = 0;
+	tr[5].submenu = NULL;
 
 	ctray.icon = TRAY_ICON1;
 	ctray.tooltip = "oscLauncher";
 	ctray.menu = tr;
 
+#ifdef USE_INPUT
+#else
 	ShowWindow(GetConsoleWindow(), SW_HIDE);
+#endif
 
     if (tray_init(&ctray) < 0) {
         printf("failed to create tray\n");

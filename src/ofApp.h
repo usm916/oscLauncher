@@ -24,18 +24,36 @@ struct Target
 	unsigned int targetPort;
 };
 
-struct AppList
+struct DataList
 {
 	string type;
 	string name;
-	string location;
+	string data;
 	string option;
 };
 
-// demonstrates receiving and processing OSC messages with an ofxOscReceiver,
-// use in conjunction with the oscSenderExample
+enum EXECTYPE
+{
+	TYPE_APP,
+	TYPE_URL,
+	TYPE_FOLDER,
+	TYPE_CMD,
+	TYPE_TXT,
+	TYPE_END
+};
+
+enum MUTETYPE
+{
+	MUTE_SET_FALSE,
+	MUTE_SET_TRUE,
+	MUTE_TOGGLE,
+	MUTE_IGNORE,
+	MUTE_GET
+};
+
 class ofApp : public ofBaseApp{
 	public:
+		//ofApp(bool state){}
 
 		void setup();
 		void update();
@@ -55,14 +73,18 @@ class ofApp : public ofBaseApp{
 
 		void sendOSC(ofxOscMessage &m);
 
-		int findAppList(vector<AppList> &_lists, string _key, AppList &_app);
-		void queSystem(vector<AppList> &_lists, string _key, string _cmd = "explorer");
+		int findAppList(vector<DataList> &_lists, string _key, DataList &_app);
+		void queSystem(vector<DataList> &_lists, string _key, string _cmd = "explorer");
+		void stringPast(vector<DataList> &_lists, string _key);
 
 		void applyMessage(vector<string> &_msg);
 		void applyKeys(INPUT *_inputs, string _ms, int &_step, bool extended = false);
 		void applyModKeys(INPUT *_inputs, string _ms, int &_step, bool _rise = false);
 		void modWork(INPUT *_input, string _str, bool _rise = false);
 		
+		void touchinject(int x, int y, int _bTouch);
+		bool pTouch;
+
 		ofTrueTypeFont font;
 		ofxOscReceiver receiver;
 		unsigned int listeningPort;
@@ -76,29 +98,35 @@ class ofApp : public ofBaseApp{
 
 		float mouseXf = 0;
 		float mouseYf = 0;
+		float px = 0;
+		float py = 0;
 		int mouseButtonInt = 0;
 		string mouseButtonState = "";
 
-		void setOutputDeviceVol(float _vol);
-		void setInputDeviceVol(float _vol);
-
+		void setClipboardText(const char *text);
+		void setDeviceVol(float _vol, EDataFlow _type, MUTETYPE mute = MUTE_IGNORE);
+		vector <bool> vMuteState;
+		bool bLogNotice = false;
 		ofImage receivedImage;
 
 		vector<Target> targetAddress; 
 
 		ofJson appListJson;
-		vector<AppList> appsLists;
-		vector<AppList> urlLists;
-		vector<AppList> folderLists;
-		vector<AppList> cmdsLists;
+		vector < vector<DataList> > dataLists;
+		vector<string> vKeyTypes;
 
 		string defaultBrowserLocation;
 		char buf[1000];
 		HWND hWnd;
+		ofVec2f startPos;
+		vector<float> volCache;
 
 		float pEncoder;
 		float sum = 0.0;
 		float pEnTime = 0.0;
+		int mk1TouchStaet = 0;
+		int setcounter = 0;
+		bool bPTouch;
 
 		string windowName, pWindowName;
 		wstring multi_to_wide_winapi(std::string const& src);
