@@ -10,8 +10,7 @@ void ofApp::setup()
 
 	appListJson = ofLoadJson("../appList.json");
 	string cjs = appListJson.dump();
-	ofLog() << "dump : " << cjs;
-
+	ofLog(OF_LOG_VERBOSE) << "dump : " << cjs;
 	bLogNotice = appListJson["logNotice"].get<bool>();
 	if (bLogNotice)
 	{
@@ -23,6 +22,24 @@ void ofApp::setup()
 		ofSetLogLevel(OF_LOG_VERBOSE);
 		ofLog(OF_LOG_VERBOSE) << "OF_LOG_VERBOSE";
 	}
+
+	// Keyword settings
+	keyList = ofLoadJson("../key.json");
+	cjs = keyList.dump();
+	ofLog(OF_LOG_VERBOSE) << "pair dump 2 : " << cjs;
+	for (int s = 0; s < keyList["pair"].size(); s++)
+	{
+		string ckey = keyList["pair"][s]["key"].get<string>();
+		string chex = keyList["pair"][s]["hex"].get<string>();
+		keyPairs[ckey] = ofHexToInt(chex);
+		ofLog(OF_LOG_VERBOSE) << ckey << " : 0x" << std::hex << ofHexToInt(chex);
+	}
+	for (auto itr = keyPairs.begin(); itr != keyPairs.end(); ++itr) {
+		ofLog(OF_LOG_VERBOSE) << "key = " << itr->first << ", val = " << hex << itr->second;
+	}
+	ofLogNotice() << "num of keys : " << keyPairs.size();
+
+
 
 	vMuteState.push_back(false);
 	vMuteState.push_back(false);
@@ -169,8 +186,9 @@ void ofApp::update()
 		string mAdr = mAdr2 = m.getAddress();
 		vector<string> &vMsg = ofSplitString(mAdr, "_");
 
-		if (vMsg[0] == "/xy1" || vMsg[0] == "/xy2" || vMsg[0] == "/multixy/1")
+		if (vMsg[0] == "/xy" || vMsg[0] == "/multixy/1")
 		{
+			int touchID = ofToInt(vMsg[1]);
 			POINT cMSPos;
 			GetCursorPos(&cMSPos);
 			//			ofLog() << "MS pos " <<  << " " << cMSPos.x << " : " << cMSPos.y;
@@ -183,12 +201,12 @@ void ofApp::update()
 			{
 				if (setcounter == 3)
 				{
-					touchinject(cx, cy, 1);
+					touchinject(cx, cy, 1, touchID);
 					//ofLog() << "MK ONE_ xy In : " << cx << " , " << cy << " : " << mk1TouchStaet;
 				}
 				else if (setcounter > 3)
 				{
-					touchinject(cx, cy, 2);
+					touchinject(cx, cy, 2, touchID);
 					//ofLog() << "MK ONE_ xy update : " << cx << " , " << cy << " : " << mk1TouchStaet;
 				}
 				px = cx;
@@ -202,7 +220,7 @@ void ofApp::update()
 
 			if (bPTouch != bCtouch && !bCtouch)
 			{
-				touchinject(cx, cy, 0);
+				touchinject(cx, cy, 0, touchID);
 				//ofLog() << "MK ONE_ xy OUT : " << cx << " , " << cy << " : " << mk1TouchStaet;
 				setcounter = 0;
 			}
@@ -278,7 +296,7 @@ void ofApp::update()
 			{
 				mk1TouchStaet = 0;
 				startPos = ofVec2f(0.0, 0.0);
-				touchinject(px, py, 0);
+				touchinject(px, py, 0 ,0);
 				ofLog(OF_LOG_VERBOSE) << "MK ONE_ xy out :";
 			}
 		}
@@ -297,11 +315,11 @@ void ofApp::update()
 				startPos = checkPos;
 				cx = cMSPos.x;
 				cy = cMSPos.y;
-				touchinject(cx, cy, 1);
+				touchinject(cx, cy, 1, 0);
 				ofLog(OF_LOG_VERBOSE) << "MK ONE_ xy In : " << cx << " , " << cy << " : " << mk1TouchStaet;
 				mk1TouchStaet += 1;
 			}
-			touchinject(cx, cy, 2);
+			touchinject(cx, cy, 2, 0);
 			ofLog(OF_LOG_VERBOSE) << "MK ONE_ xy update : " << cx << " , " << cy << " : " << mk1TouchStaet;
 
 			px = cx;
@@ -522,12 +540,13 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 void ofApp::applyMessage(vector<string> &_msg)
 {
-	for (int i = 0; i < _msg.size(); i++)
-	{
-		ofLog(OF_LOG_VERBOSE) << _msg[i];
-	}
+	//for (int i = 0; i < _msg.size(); i++)
+	//{
+	//	ofLog(OF_LOG_VERBOSE) << _msg[i];
+	//}
 
-	unsigned int numKey = (_msg.size()-1 + _msg[1].length()) * 2;
+	unsigned int numKey = _msg[1].length();// (_msg.size() - 1 + _msg[1].length()) * 2;
+	//INPUT inputs[2];
 	INPUT inputs[14];
 	
 	ZeroMemory(inputs, sizeof(inputs));
@@ -538,11 +557,13 @@ void ofApp::applyMessage(vector<string> &_msg)
 	if (numKey == 0)
 	{
 		bExtended = false;
+		ofLog(OF_LOG_VERBOSE) << "no extender";
 	}
 	else
 	{
 		bExtended = true;
 		applyModKeys(inputs, _msg[1], step);
+		ofLog(OF_LOG_VERBOSE) << "APPLY extender";
 	}
 
 	applyKeys(inputs, _msg[2], step, bExtended);
@@ -550,10 +571,12 @@ void ofApp::applyMessage(vector<string> &_msg)
 	if (numKey == 0)
 	{
 		bExtended = false;
+		ofLog(OF_LOG_VERBOSE) << "no extender";
 	}
 	else
 	{
 		applyModKeys(inputs, _msg[1], step, true);
+		ofLog(OF_LOG_VERBOSE) << "APPLY extender";
 	}
 
 	UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
@@ -568,7 +591,7 @@ void ofApp::applyModKeys(INPUT *_inputs, string _msg, int &_step, bool _rise)
 	string cMsg = _msg;
 	if (!_rise)
 	{
-		ofLog(OF_LOG_VERBOSE) << "down " << cMsg;
+		ofLog(OF_LOG_VERBOSE) << "DOWN " << cMsg;
 	}
 	else
 	{
@@ -590,17 +613,21 @@ void ofApp::applyModKeys(INPUT *_inputs, string _msg, int &_step, bool _rise)
 		sid[2] = "C";
 		sid[3] = "A";
 	}
+
 	for (int i = 0; i < 4; i++)
 	{
 		int p = -1;
 		p = _msg.find(sid[i]);
-		ofLog(OF_LOG_VERBOSE) << i <<" : p = " << p;
 		if (p!=-1)
 		{
 			_msg.erase(p, 1);
 			ofLog(OF_LOG_VERBOSE) << "p=" << p << " step=" << _step << " " << &(_inputs[_step]);
 			modWork(&(_inputs[_step]), sid[i], _rise);
 			_step++;
+		}
+		else
+		{
+			ofLog(OF_LOG_VERBOSE) << i << " : p = " << p << " " << sid[i];
 		}
 	}
 }
@@ -633,44 +660,29 @@ void ofApp::applyKeys(INPUT *_inputs, string str, int &_step, bool extended)
 	WORD key = 0;
 	if (str.length() == 1)
 	{
+		/*
+		* VK_0 - VK_9 are the same as ASCII '0' - '9' (0x30 - 0x39)
+		* 0x3A - 0x40 : unassigned
+		* VK_A - VK_Z are the same as ASCII 'A' - 'Z' (0x41 - 0x5A)
+		*/
 		//WORD baseKey = 65;
 		key = ofToChar(str);
-		if (key >= 97)key = key - 32;
+		if (key >= 95)key = key - 32;
 	}
 	else
 	{
-		if (str == "esc")key = VK_ESCAPE;
-		else if (str == "bs")key = VK_BACK;
-		else if (str == "del")key = VK_DELETE;
-		else if (str == "tab")key = VK_TAB;
-		else if (str == "end")key = VK_END;
-		else if (str == "up")key = VK_UP;
-		else if (str == "down")key = VK_DOWN;
-		else if (str == "left")key = VK_LEFT;
-		else if (str == "right")key = VK_RIGHT;
-		else if (str == "kanji")key = VK_KANJI;
-		else if (str == "pgup")key = VK_PRIOR;
-		else if (str == "pgdown")key = VK_NEXT;
-		else if (str == "slash")key = VK_DIVIDE;
-		else if (str == "asta")key = VK_MULTIPLY;
-		else if (str == "plus")key = VK_ADD;
-		else if (str == "minus")key = VK_SUBTRACT;
-		else if (str == "clear")key = VK_CLEAR;
-		else if (str == "enter")key = VK_RETURN;
-		else if (str == "period")key = VK_OEM_PERIOD;
-		else if (str == "numlock")key = VK_NUMLOCK;
-		else if (str == "num0")key = VK_NUMPAD0;
-		else if (str == "num1")key = VK_NUMPAD1;
-		else if (str == "num2")key = VK_NUMPAD2;
-		else if (str == "num3")key = VK_NUMPAD3;
-		else if (str == "num4")key = VK_NUMPAD4;
-		else if (str == "num5")key = VK_NUMPAD5;
-		else if (str == "num6")key = VK_NUMPAD6;
-		else if (str == "num7")key = VK_NUMPAD7;
-		else if (str == "num8")key = VK_NUMPAD8;
-		else if (str == "num9")key = VK_NUMPAD9;
+		auto itr = keyPairs.find(str);
+		if (itr != keyPairs.end())
+		{
+			ofLog(OF_LOG_VERBOSE) << "key from map :: " << itr->first;
+			key = itr->second;
+		}
+		else
+		{
+			ofLog(OF_LOG_VERBOSE) << "key not found.";
+		}
 	}
-	ofLog(OF_LOG_VERBOSE) << "=======>> Key = 0x" << std::hex << key;
+	ofLog(OF_LOG_VERBOSE) << "=======>> Key HEX = 0x" << std::hex << key;
 
 	_inputs[_step].type = INPUT_KEYBOARD;
 	_inputs[_step].ki.wVk = key;
@@ -915,7 +927,7 @@ void ofApp::setClipboardText(const char *text) {
 //	_In_opt_ HINSTANCE hPrevInstance,
 //	_In_ LPSTR lpCmdLine,
 //	_In_ int nShowCmd)
-void ofApp::touchinject(int _x, int _y, int _bTouch)
+void ofApp::touchinject(int _x, int _y, int _bTouch, int _tID)
 {
 	POINTER_TOUCH_INFO contact;
 	BOOL bRet = TRUE;
@@ -924,17 +936,18 @@ void ofApp::touchinject(int _x, int _y, int _bTouch)
 	// assume a maximum of 10 contacts and turn touch feedback off
 	//
 	if(_bTouch==1)
-		InitializeTouchInjection(10, TOUCH_FEEDBACK_NONE);
+		InitializeTouchInjection(10, TOUCH_FEEDBACK_DEFAULT);
 
 	//
 	// initialize the touch info structure
 	//
 	memset(&contact, 0, sizeof(POINTER_TOUCH_INFO));
-
+	ofLog(OF_LOG_VERBOSE) << _tID;
 	contact.pointerInfo.pointerType = PT_TOUCH; //we're sending touch input
-	contact.pointerInfo.pointerId = 0;          //contact 0
+	contact.pointerInfo.pointerId = _tID;          //contact 0
 	contact.pointerInfo.ptPixelLocation.x = _x;
 	contact.pointerInfo.ptPixelLocation.y = _y;
+
 	//contact.pointerInfo.pointerFlags = POINTER_FLAG_DOWN | POINTER_FLAG_INRANGE | POINTER_FLAG_INCONTACT;
 	if (_bTouch==1)
 	{
@@ -946,7 +959,7 @@ void ofApp::touchinject(int _x, int _y, int _bTouch)
 	}
 	else
 	{
-		contact.pointerInfo.pointerFlags = POINTER_FLAG_UP;
+		contact.pointerInfo.pointerFlags = POINTER_FLAG_UP | POINTER_FLAG_INRANGE;
 	}
 	contact.touchFlags = TOUCH_FLAG_NONE;
 	contact.touchMask = TOUCH_MASK_CONTACTAREA | TOUCH_MASK_ORIENTATION | TOUCH_MASK_PRESSURE;
@@ -956,10 +969,11 @@ void ofApp::touchinject(int _x, int _y, int _bTouch)
 	//
 	// set the contact area depending on thickness
 	//
-	contact.rcContact.top = _x - 2;
-	contact.rcContact.bottom = _x + 2;
-	contact.rcContact.left = _y - 2;
-	contact.rcContact.right = _y + 2;
+	int margin = 4;
+	contact.rcContact.top = _x - margin;
+	contact.rcContact.bottom = _x + margin;
+	contact.rcContact.left = _y - margin;
+	contact.rcContact.right = _y + margin;
 
 	//
 	// inject a touch down
@@ -967,3 +981,8 @@ void ofApp::touchinject(int _x, int _y, int _bTouch)
 	InjectTouchInput(1, &contact);
 
 }
+
+
+
+
+

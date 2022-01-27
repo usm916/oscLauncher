@@ -67,6 +67,14 @@ static 	void editKeys_cb(struct tray_menu* item) {
 	tray_update(&ctray);
 }
 
+static 	void editKeyMap_cb(struct tray_menu* item) {
+	(void)item;
+	stringstream ss;
+	ss << "explorer key.json";
+	system(ss.str().c_str());
+	tray_update(&ctray);
+}
+
 static 	void quit_cb(struct tray_menu* item) {
 	ofExit();
 	(void)item;
@@ -136,7 +144,7 @@ int main()
 	//CTray cTray;
 	cout << "strat main()" << endl;
 
-    tray_menu tr[6];
+    tray_menu tr[7];
 
 	tr[0].text = "Hello World with task tray !";
 	tr[0].cb = hello_cb;
@@ -159,24 +167,31 @@ int main()
 	tr[2].checkbox = 0;
 	tr[2].submenu = NULL;
 
-	tr[3].text = "-";
+	tr[3].text = "Open KeyVK Editor";
+	tr[3].cb = editKeyMap_cb;
 	tr[3].disabled = 0;
 	tr[3].checked = 0;
 	tr[3].checkbox = 0;
 	tr[3].submenu = NULL;
 
-	tr[4].text = "Quit";
+	tr[4].text = "-";
 	tr[4].disabled = 0;
 	tr[4].checked = 0;
 	tr[4].checkbox = 0;
-	tr[4].cb = quit_cb;
 	tr[4].submenu = NULL;
 
-	tr[5].text = NULL;
+	tr[5].text = "Quit";
 	tr[5].disabled = 0;
 	tr[5].checked = 0;
 	tr[5].checkbox = 0;
+	tr[5].cb = quit_cb;
 	tr[5].submenu = NULL;
+
+	tr[6].text = NULL;
+	tr[6].disabled = 0;
+	tr[6].checked = 0;
+	tr[6].checkbox = 0;
+	tr[6].submenu = NULL;
 
 	ctray.icon = TRAY_ICON1;
 	ctray.tooltip = "oscLauncher";

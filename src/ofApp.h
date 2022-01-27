@@ -82,7 +82,7 @@ class ofApp : public ofBaseApp{
 		void applyModKeys(INPUT *_inputs, string _ms, int &_step, bool _rise = false);
 		void modWork(INPUT *_input, string _str, bool _rise = false);
 		
-		void touchinject(int x, int y, int _bTouch);
+		void touchinject(int x, int y, int _bTouch, int _tID);
 		bool pTouch;
 
 		ofTrueTypeFont font;
@@ -111,9 +111,10 @@ class ofApp : public ofBaseApp{
 
 		vector<Target> targetAddress; 
 
-		ofJson appListJson;
+		ofJson appListJson, keyList;
 		vector < vector<DataList> > dataLists;
 		vector<string> vKeyTypes;
+		map<string, WORD> keyPairs;
 
 		string defaultBrowserLocation;
 		char buf[1000];

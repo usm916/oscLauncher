@@ -2,7 +2,7 @@
     "listenPort":12233,
     "defaultTabNum":0,
     "defaultBrowserLocation":"start",
-    "logNotice":true,
+    "logNotice":false,
     "targets":[
         {
             "enable":true,
@@ -14,12 +14,18 @@
             "enable":true,
             "name":"iPhone6Plus",
             "address":"10.147.17.149",
-            "port":12234
+            "port":13254
         },
         {
             "enable":false,
             "name":"iPadPro12_4th",
             "address":"10.147.17.138",
+            "port":12234
+        },
+        {
+            "enable":false,
+            "name":"test_localhost",
+            "address":"127.0.0.1",
             "port":12234
         }
     ],
@@ -240,7 +246,7 @@
         },
         {
             "key":"test2",
-            "data":"ABCDEFGHIJKLMNOPQRSTUV",
+            "data":"ABCDEFGHIJKLMNOPQRSTUVXYZ",
             "option":""
         }
     ]
