@@ -1,0 +1,34 @@
+{
+    "listenPort": 12233,
+    "defaultTabNum": 0,
+    "defaultBrowserLocation": "start",
+    "logNotice": false,
+    "targets":
+    [
+        {
+            "enable": true,
+            "name": "00_editor",
+            "address": "127.0.0.1",
+            "port": 12243
+        },
+        {
+            "enable": true,
+            "name": "iPhone13Pro",
+            "address": "10.147.17.111",
+            "port": 13254
+        },
+        {
+            "enable": true,
+            "name": "iPhone6Plus",
+            "address": "10.147.17.149",
+            "port": 13254
+        }
+    ],
+    "keyTypes":[
+        {"type":"app","display":"apps"},
+        {"type":"url","display":"url"},
+        {"type":"f","display":"folders"},
+        {"type":"cmd","display":"console"},
+        {"type":"txt","display":"text past"}
+    ]
+}

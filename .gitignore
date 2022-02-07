@@ -14,3 +14,7 @@ bin/data/.gitkeep
 bin/data/log.txt
 bin/Untitled-1.txt
 bin/log.txt
+bin/keyEditor.exe
+bin/keyEditor.exp
+bin/keyEditor.lib
+bin/keyEditor.pdb

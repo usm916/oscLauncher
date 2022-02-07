@@ -1,36 +1,5 @@
 {
-    "listenPort":12233,
-    "defaultTabNum":0,
-    "defaultBrowserLocation":"start",
-    "logNotice":false,
-    "targets":[
-        {
-            "enable":true,
-            "name":"iPhone13Pro",
-            "address":"10.147.17.111",
-            "port":12234
-        },
-        {
-            "enable":true,
-            "name":"iPhone6Plus",
-            "address":"10.147.17.149",
-            "port":13254
-        },
-        {
-            "enable":false,
-            "name":"iPadPro12_4th",
-            "address":"10.147.17.138",
-            "port":12234
-        },
-        {
-            "enable":false,
-            "name":"test_localhost",
-            "address":"127.0.0.1",
-            "port":12234
-        }
-    ],
-    "keyTypes":["apps","url","f","cmds","txt"],
-    "apps":[
+    "app":[
         {
             "key":"houdini",
             "data":"C:\\Program Files\\Side Effects Software\\Houdini 18.5.696\\bin\\houdinifx.exe",
@@ -80,8 +49,18 @@
             "key":"slack",
             "data":"C:\\Users\\noTempo\\AppData\\Local\\slack\\slack.exe",
             "option":""
+        },
+        {
+            "key":"gpuz",
+            "data":"C:\\Program Files (x86)\\GPU-Z\\GPU-Z.exe",
+            "option":""
+        },
+        {
+            "key":"onenote",
+            "data": "C:\\Program Files\\Microsoft Office\\root\\Office16\\ONENOTE.EXE",
+            "option":""
         }
-    ],
+           ],
     "f":[
         {
             "key":"winapp",
@@ -182,6 +161,16 @@
             "key":"touchosc",
             "data":"C:\\Program Files\\TouchOSC\\TouchOSC.exe",
             "option":""
+        },
+        {
+            "key":"startmenu",
+            "data":"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
+            "option":""
+        },
+        {
+            "key":"startup",
+            "data":"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp",
+            "option":""
         }
     ],
     "url":[
@@ -221,7 +210,7 @@
             "option":""
         }
     ],
-    "cmds":[
+    "cmd":[
         {
             "key":"qres_2048",
             "data":"D:\\data\\utilApps\\QRes\\QRes2048.bat",
@@ -235,6 +224,11 @@
         {
             "key":"qres_24",
             "data":"D:\\data\\utilApps\\QRes\\QRes_24.bat",
+            "option":""
+        },
+        {
+            "key":"mouse",
+            "data":"MAIN.CPL",
             "option":""
         }
     ],

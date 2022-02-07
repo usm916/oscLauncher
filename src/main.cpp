@@ -1,5 +1,5 @@
 #include "ofMain.h"
-#include "ofApp.h"
+#include "oscLouncher.h"
 #include "ofAppNoWindow.h"
 
 #include <stdio.h>
@@ -136,7 +136,7 @@ int _main()
 	ofAppNoWindow window;
 	ofSetupOpenGL(&window, 1024, 768, OF_WINDOW);
 #endif
-	return ofRunApp(new ofApp());
+	return ofRunApp(new OscLauncher());
 }
 
 int main()
