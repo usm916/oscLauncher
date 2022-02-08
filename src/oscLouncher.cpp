@@ -28,18 +28,7 @@ void OscLauncher::setup()
 	// listen on the given port
 	ofLog() << "listening for osc messages on port " << listeningPort;
 	receiver.setup(listeningPort);
-	ofLog() << "Num of targets - " << configJson["targets"].size();
-	for (int i = 0; i < configJson["targets"].size(); i++)
-	{
-		targetAddress.push_back(Target());
-		targetAddress.back().name = configJson["targets"][i]["name"].get<string>();
-		targetAddress.back().address = configJson["targets"][i]["address"].get<string>();
-		targetAddress.back().targetPort = configJson["targets"][i]["port"].get<int>();
-		targetAddress.back().bEnable = configJson["targets"][i]["enable"].get<bool>();
-		senders.push_back(ofxOscSender());
-		senders.back().setup(targetAddress.back().address, targetAddress.back().targetPort);
-	}
-	ofLog() << "num added targetLists " << targetAddress.size();
+
 	for (int s = 0; s < configJson["keyTypes"].size(); s++)
 	{
 		vKeyTypes.push_back(configJson["keyTypes"][s]["type"].get<string>());
@@ -50,33 +39,45 @@ void OscLauncher::setup()
 	// read -------------------------------------------------------- Link data
 	appListJson = ofLoadJson("../appList.json");
 	cjs = appListJson.dump();
-	bool isOld = true;
-	ofLog(OF_LOG_VERBOSE) << "KeyType : " << appListJson["keyTypes"].size();
+	ofLog(OF_LOG_VERBOSE) << "KeyType : " << vKeyTypes.size();
 	ofLog(OF_LOG_VERBOSE) << "dump apps settings : " << cjs;
 	int searchCnt = 0;
-	for (int s = 0; s < appListJson["keyTypes"].size(); s++)
+	for (int s = 0; s < vKeyTypes.size(); s++)
 	{
 		dataLists.push_back(vector< ofPtr<DataList> >());
-		for (int i = 0; i < appListJson[vKeyTypes.back()].size(); i++)
+		if (s>0)
 		{
-			dataLists.back().push_back(ofPtr<DataList>(new DataList));
-			dataLists.back().back()->type = vKeyTypes.back();
-
-			if (isOld)
+			for (int i = 0; i < appListJson[vKeyTypes[s]].size(); i++)
 			{
-				dataLists.back().back()->keys.push_back(appListJson[vKeyTypes.back()][i]["key"].get<string>());
-				keySearchIndex[dataLists.back().back()->keys.back()] = ofToString(s) + "_" + ofToString(i);
-			}
-			else
-			{
-				for (int k = 0; k < appListJson[vKeyTypes.back()][i]["keys"].size(); k++)
+				dataLists.back().push_back(ofPtr<DataList>(new DataList));
+				dataLists.back().back()->type = vKeyTypes[s];
+				dataLists.back().back()->bEdit = false;
+				dataLists.back().back()->bEnable = true;
+				for (int k = 0; k < appListJson[vKeyTypes[s]][i]["keys"].size(); k++)
 				{
-					dataLists.back().back()->keys.push_back(appListJson[vKeyTypes.back()][i]["keys"][k].get<string>());
+					ofLog(OF_LOG_VERBOSE) << "Multiple keys : ";
+					dataLists.back().back()->keys.push_back(appListJson[vKeyTypes[s]][i]["keys"][k].get<string>());
 					keySearchIndex[dataLists.back().back()->keys.back()] = ofToString(s) + "_" + ofToString(i);
 				}
+				dataLists.back().back()->data = appListJson[vKeyTypes[s]][i]["data"].get<string>();
+				dataLists.back().back()->option = appListJson[vKeyTypes[s]][i]["option"].get<string>();
 			}
-			dataLists.back().back()->data = appListJson[vKeyTypes.back()][i]["data"].get<string>();
-			dataLists.back().back()->option = appListJson[vKeyTypes.back()][i]["option"].get<string>();
+		}
+		else if(s==0)
+		{
+			ofLog() << "Num of targets - " << configJson["targets"].size();
+			for (int i = 0; i < configJson["targets"].size(); i++)
+			{
+				dataLists.back().push_back(ofPtr<DataList>(new DataList));
+				dataLists.back().back()->bEdit = false;
+				dataLists.back().back()->type = "network";
+				dataLists.back().back()->keys.push_back(configJson["targets"][i]["name"].get<string>());
+				dataLists.back().back()->data = configJson["targets"][i]["address"].get<string>();
+				dataLists.back().back()->option = ofToString(configJson["targets"][i]["port"].get<string>());
+				dataLists.back().back()->bEnable = configJson["targets"][i]["enable"].get<bool>();
+				senders.push_back(ofxOscSender());
+				senders.back().setup(dataLists.back().back()->data, ofToInt(dataLists.back().back()->option));
+			}
 		}
 	}
 	for (auto itr = keySearchIndex.begin(); itr != keySearchIndex.end(); ++itr) {
@@ -845,7 +846,7 @@ void OscLauncher::sendOSC(ofxOscMessage &m)
 {
 	for (int i = 0; i < senders.size();i++)
 	{
-		if (targetAddress[i].bEnable)
+		if (dataLists[0][i]->bEnable)
 		{
 			senders[i].sendMessage(m);
 		}

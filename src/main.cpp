@@ -64,6 +64,10 @@ static 	void editKeys_cb(struct tray_menu* item) {
 	stringstream ss;
 	ss << "explorer appList.json";
 	system(ss.str().c_str());
+
+	stringstream ss2;
+	ss2 << "explorer keyEdito.bat";
+	system(ss2.str().c_str());
 	tray_update(&ctray);
 }
 

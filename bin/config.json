@@ -1,34 +1,56 @@
 {
-    "listenPort": 12233,
-    "defaultTabNum": 0,
     "defaultBrowserLocation": "start",
-    "logNotice": false,
-    "targets":
-    [
+    "defaultTabNum": 0,
+    "keyTypes": [
         {
-            "enable": true,
-            "name": "00_editor",
-            "address": "127.0.0.1",
-            "port": 12243
+            "display": "  Network   ",
+            "type": "netset"
         },
         {
-            "enable": true,
-            "name": "iPhone13Pro",
-            "address": "10.147.17.111",
-            "port": 13254
+            "display": "    Apps    ",
+            "type": "app"
         },
         {
-            "enable": true,
-            "name": "iPhone6Plus",
-            "address": "10.147.17.149",
-            "port": 13254
+            "display": "     URL     ",
+            "type": "url"
+        },
+        {
+            "display": "   Folders   ",
+            "type": "f"
+        },
+        {
+            "display": "   Console   ",
+            "type": "cmd"
+        },
+        {
+            "display": "  Text past  ",
+            "type": "txt"
+        },
+        {
+            "display": "   Combine   ",
+            "type": "cmb"
         }
     ],
-    "keyTypes":[
-        {"type":"app","display":"apps"},
-        {"type":"url","display":"url"},
-        {"type":"f","display":"folders"},
-        {"type":"cmd","display":"console"},
-        {"type":"txt","display":"text past"}
+    "listenPort": 12233,
+    "logNotice": false,
+    "targets": [
+        {
+            "address": "127.0.0.1",
+            "enable": true,
+            "name": "00_editor",
+            "port": "25555"
+        },
+        {
+            "address": "10.147.17.111",
+            "enable": true,
+            "name": "iPhone13Pro",
+            "port": "13254"
+        },
+        {
+            "address": "10.147.17.149",
+            "enable": true,
+            "name": "iPhone6Plus",
+            "port": "13254"
+        }
     ]
 }

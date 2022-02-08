@@ -16,25 +16,20 @@
 // max number of strings to display
 #define NUM_MSG_STRINGS 20
 
-struct Target
-{
-	string name;
-	bool bEnable;
-	string address;
-	unsigned int targetPort;
-};
-
 struct DataList
 {
 	bool bEdit;
+	bool bEnable;
 	string type;
 	vector<string> keys;
 	string data;
 	string option;
+	int targetPort;
 };
 
 enum EXECTYPE
 {
+	TYPE_SETTING,
 	TYPE_APP,
 	TYPE_URL,
 	TYPE_FOLDER,
@@ -90,7 +85,7 @@ class OscLauncher : public ofBaseApp{
 
 		ofTrueTypeFont font;
 		ofxOscReceiver receiver;
-		unsigned int listeningPort;
+		int listeningPort;
 		vector<ofxOscSender> senders;
 
 		int currentMsgString;
@@ -111,8 +106,6 @@ class OscLauncher : public ofBaseApp{
 		vector <bool> vMuteState;
 		bool bLogNotice = false;
 		ofImage receivedImage;
-
-		vector<Target> targetAddress; 
 
 		ofJson configJson, appListJson, keyList;
 		vector< vector< ofPtr<DataList> > > dataLists;

@@ -18,3 +18,5 @@ bin/keyEditor.exe
 bin/keyEditor.exp
 bin/keyEditor.lib
 bin/keyEditor.pdb
+*.zip
+bin_0208_2022/

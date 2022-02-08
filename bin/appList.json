@@ -1,249 +1,341 @@
 {
-    "app":[
+    "app": [
         {
-            "key":"houdini",
-            "data":"C:\\Program Files\\Side Effects Software\\Houdini 18.5.696\\bin\\houdinifx.exe",
-            "option":""
+            "data": "C:\\Program Files\\Side Effects Software\\Houdini 18.5.696\\bin\\houdinifx.exe",
+            "keys": [
+                "houdini"
+            ],
+            "option": ""
         },
         {
-            "key":"blender",
-            "data":"C:\\Program Files\\Blender Foundation\\ecycles\\blender.exe",
-            "option":""
+            "data": "C:\\Program Files\\Blender Foundation\\ecycles\\blender.exe",
+            "keys": [
+                "blender"
+            ],
+            "option": ""
         },
         {
-            "key":"visualstudio2019",
-            "data":"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\devenv.exe",
-            "option":""
+            "data": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\devenv.exe",
+            "keys": [
+                "visualstudio2019"
+            ],
+            "option": ""
         },
         {
-            "key":"visualstudio2017",
-            "data":"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\IDE\\devenv.exe",
-            "option":""
+            "data": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\IDE\\devenv.exe",
+            "keys": [
+                "visualstudio2017"
+            ],
+            "option": ""
         },
         {
-            "key":"vscode",
-            "data":"C:\\Users\\noTempo\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
-            "option":""
+            "data": "C:\\Users\\noTempo\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+            "keys": [
+                "vscode"
+            ],
+            "option": ""
         },
         {
-            "key":"cmd",
-            "data":"C:\\Windows\\System32\\cmd.exe",
-            "option":""
+            "data": "C:\\Windows\\System32\\cmd.exe",
+            "keys": [
+                "cmd"
+            ],
+            "option": ""
         },
         {
-            "key":"calc",
-            "data":"C:\\Windows\\WinSxS\\wow64_microsoft-windows-calc_31bf3856ad364e35_10.0.19041.1_none_6a03b910ee7a4073\\calc.exe",
-            "option":""
+            "data": "C:\\Windows\\WinSxS\\wow64_microsoft-windows-calc_31bf3856ad364e35_10.0.19041.1_none_6a03b910ee7a4073\\calc.exe",
+            "keys": [
+                "calc"
+            ],
+            "option": ""
         },
         {
-            "key":"nvexp",
-            "data":"C:\\Program Files\\NVIDIA Corporation\\NVIDIA GeForce Experience\\NVIDIA GeForce Experience.exe",
-            "option":""
+            "data": "C:\\Program Files\\NVIDIA Corporation\\NVIDIA GeForce Experience\\NVIDIA GeForce Experience.exe",
+            "keys": [
+                "nvexp"
+            ],
+            "option": ""
         },
         {
-            "key":"chrome",
-            "data":"C:\\program Files\\Google\\Chrome\\Application\\chrome.exe",
-            "option":""
+            "data": "C:\\program Files\\Google\\Chrome\\Application\\chrome.exe",
+            "keys": [
+                "chrome"
+            ],
+            "option": ""
         },
         {
-            "key":"slack",
-            "data":"C:\\Users\\noTempo\\AppData\\Local\\slack\\slack.exe",
-            "option":""
+            "data": "C:\\Users\\noTempo\\AppData\\Local\\slack\\slack.exe",
+            "keys": [
+                "slack"
+            ],
+            "option": ""
         },
         {
-            "key":"gpuz",
-            "data":"C:\\Program Files (x86)\\GPU-Z\\GPU-Z.exe",
-            "option":""
+            "data": "C:\\Program Files (x86)\\GPU-Z\\GPU-Z.exe",
+            "keys": [
+                "gpuz"
+            ],
+            "option": ""
         },
         {
-            "key":"onenote",
-            "data": "C:\\Program Files\\Microsoft Office\\root\\Office16\\ONENOTE.EXE",
-            "option":""
-        }
-           ],
-    "f":[
-        {
-            "key":"winapp",
-            "data":"D:\\data\\code\\winApp",
-            "option":""
-        },
-        {
-            "key":"download",
-            "data":"C:\\Users\\noTempo\\Downloads",
-            "option":""
-        },
-        {
-            "key":"utilapp",
-            "data":"D:\\data\\utilApps",
-            "option":""
-        },
-        {
-            "key":"fab",
-            "data":"\\\\asrx299\\data\\temp\\fab",
-            "option":""
-        },
-        {
-            "key":"projects",
-            "data":"D:\\data\\projects",
-            "option":""
-        },
-        {
-            "key":"viet",
-            "data":"D:\\data\\projects\\Viet",
-            "option":""
-        },
-        {
-            "key":"code",
-            "data":"D:\\data\\code",
-            "option":""
-        },
-        {
-            "key":"onenote",
-            "data":"D:\\data\\code",
-            "option":""
-        },
-        {
-            "key":"documents",
-            "data":"C:\\Users\\noTempo",
-            "option":""
-        },
-        {
-            "key":"startup",
-            "data":"D:\\data\\code",
-            "option":""
-        },
-        {
-            "key":"program",
-            "data":"C:\\Program Files",
-            "option":""
-        },
-        {
-            "key":"nasshare",
-            "data":"\\\\NAS453\\Public\\Share",
-            "option":""
-        },
-        {
-            "key":"bluetooth",
-            "data":"D:\\data\\code",
-            "option":""
-        },
-        {
-            "key":"device",
-            "data":"D:\\data\\code",
-            "option":""
-        },
-        {
-            "key":"nvexp",
-            "data":"C:\\Program Files\\NVIDIA Corporation\\NVIDIA GeForce Experience\\NVIDIA GeForce Experience.exe",
-            "option":""
-        },
-        {
-            "key":"nvctrl",
-            "data":"D:\\data\\code",
-            "option":""
-        },
-        {
-            "key":"mouse",
-            "data":"D:\\data\\code",
-            "option":""
-        },
-        {
-            "key":"application",
-            "data":"D:\\data\\code",
-            "option":""
-        },
-        {
-            "key":"of112",
-            "data":"D:\\data\\code\\of_v0.11.2_vs2017_release",
-            "option":""
-        },
-        {
-            "key":"touchosc",
-            "data":"C:\\Program Files\\TouchOSC\\TouchOSC.exe",
-            "option":""
-        },
-        {
-            "key":"startmenu",
-            "data":"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
-            "option":""
-        },
-        {
-            "key":"startup",
-            "data":"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp",
-            "option":""
+            "data": "D:\\data\\code\\of_v0.11.2_vs2017_release\\apps\\myApps\\oscLauncher\\bin\\keyEdito.bat",
+            "keys": [
+                "keyeditor"
+            ],
+            "option": ""
         }
     ],
-    "url":[
+    "cmd": [
         {
-            "key":"youtube",
-            "data":"https://www.youtube.com",
-            "option":""
+            "data": "D:\\data\\utilApps\\QRes\\QRes2048.bat",
+            "keys": [
+                "qres_2048"
+            ],
+            "option": ""
         },
         {
-            "key":"google",
-            "data":"https://www.google.com",
-            "option":""
+            "data": "D:\\data\\utilApps\\QRes\\QRes_4K.bat",
+            "keys": [
+                "qres_4k"
+            ],
+            "option": ""
         },
         {
-            "key":"twitter",
-            "data":"https://twitter.com/home",
-            "option":""
+            "data": "D:\\data\\utilApps\\QRes\\QRes_24.bat",
+            "keys": [
+                "qres_24"
+            ],
+            "option": ""
         },
         {
-            "key":"pinterest",
-            "data":"https://www.pinterest.jp/",
-            "option":""
-        },
-        {
-            "key":"amazon",
-            "data":"https://www.amazon.co.jp/",
-            "option":""
-        },
-        {
-            "key":"amazonvideo",
-            "data":"https://www.amazon.co.jp/gp/browse.html?node=2351649051&ref_=nav_em__aiv_vid_0_2_2_2",
-            "option":""
-        },
-        {
-            "key":"gmail",
-            "data":"https://mail.google.com/mail/",
-            "option":""
+            "data": "MAIN.CPL",
+            "keys": [
+                "mouse"
+            ],
+            "option": ""
         }
     ],
-    "cmd":[
+    "f": [
         {
-            "key":"qres_2048",
-            "data":"D:\\data\\utilApps\\QRes\\QRes2048.bat",
-            "option":""
+            "data": "D:\\data\\code\\winApp",
+            "keys": [
+                "winapp"
+            ],
+            "option": ""
         },
         {
-            "key":"qres_4k",
-            "data":"D:\\data\\utilApps\\QRes\\QRes_4K.bat",
-            "option":""
+            "data": "C:\\Users\\noTempo\\Downloads",
+            "keys": [
+                "download"
+            ],
+            "option": ""
         },
         {
-            "key":"qres_24",
-            "data":"D:\\data\\utilApps\\QRes\\QRes_24.bat",
-            "option":""
+            "data": "D:\\data\\utilApps",
+            "keys": [
+                "utilapp"
+            ],
+            "option": ""
         },
         {
-            "key":"mouse",
-            "data":"MAIN.CPL",
-            "option":""
+            "data": "\\\\asrx299\\data\\temp\\fab",
+            "keys": [
+                "fab"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\projects",
+            "keys": [
+                "projects"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\projects\\Viet",
+            "keys": [
+                "viet"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\code",
+            "keys": [
+                "code"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\code",
+            "keys": [
+                "onenote"
+            ],
+            "option": ""
+        },
+        {
+            "data": "C:\\Users\\noTempo",
+            "keys": [
+                "documents"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\code",
+            "keys": [
+                "startup"
+            ],
+            "option": ""
+        },
+        {
+            "data": "C:\\Program Files",
+            "keys": [
+                "program"
+            ],
+            "option": ""
+        },
+        {
+            "data": "\\\\NAS453\\Public\\Share",
+            "keys": [
+                "nasshare"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\code",
+            "keys": [
+                "bluetooth"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\code",
+            "keys": [
+                "device"
+            ],
+            "option": ""
+        },
+        {
+            "data": "C:\\Program Files\\NVIDIA Corporation\\NVIDIA GeForce Experience\\NVIDIA GeForce Experience.exe",
+            "keys": [
+                "nvexp"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\code",
+            "keys": [
+                "nvctrl"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\code",
+            "keys": [
+                "mouse"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\code",
+            "keys": [
+                "application"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\code\\of_v0.11.2_vs2017_release",
+            "keys": [
+                "of112"
+            ],
+            "option": ""
+        },
+        {
+            "data": "C:\\Program Files\\TouchOSC\\TouchOSC.exe",
+            "keys": [
+                "touchosc"
+            ],
+            "option": ""
+        },
+        {
+            "data": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
+            "keys": [
+                "startmenu"
+            ],
+            "option": ""
+        },
+        {
+            "data": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp",
+            "keys": [
+                "startup"
+            ],
+            "option": ""
         }
     ],
-    "txt":[
+    "txt": [
         {
-            "key":"test1",
-            "data":"abcdefghijklmnopqrstuvwxyz",
-            "option":""
+            "data": "abcdefghijklmnopqrstuvwxyz",
+            "keys": [
+                "test1"
+            ],
+            "option": ""
         },
         {
-            "key":"test2",
-            "data":"ABCDEFGHIJKLMNOPQRSTUVXYZ",
-            "option":""
+            "data": "ABCDEFGHIJKLMNOPQRSTUVXYZ",
+            "keys": [
+                "test2"
+            ],
+            "option": ""
+        }
+    ],
+    "url": [
+        {
+            "data": "https://www.youtube.com",
+            "keys": [
+                "youtube"
+            ],
+            "option": ""
+        },
+        {
+            "data": "https://www.google.com",
+            "keys": [
+                "google"
+            ],
+            "option": ""
+        },
+        {
+            "data": "https://twitter.com/home",
+            "keys": [
+                "twitter"
+            ],
+            "option": ""
+        },
+        {
+            "data": "https://www.pinterest.jp/",
+            "keys": [
+                "pinterest"
+            ],
+            "option": ""
+        },
+        {
+            "data": "https://www.amazon.co.jp/",
+            "keys": [
+                "amazon"
+            ],
+            "option": ""
+        },
+        {
+            "data": "https://www.amazon.co.jp/gp/browse.html?node=2351649051&ref_=nav_em__aiv_vid_0_2_2_2",
+            "keys": [
+                "amazonvideo"
+            ],
+            "option": ""
+        },
+        {
+            "data": "https://mail.google.com/mail/",
+            "keys": [
+                "gmail"
+            ],
+            "option": ""
         }
     ]
 }
-
-
