@@ -83,6 +83,20 @@
                 "keyeditor"
             ],
             "option": ""
+        },
+        {
+            "data": "C:\\Program Files\\Blackmagic Design\\DaVinci Resolve\\Resolve.exe",
+            "keys": [
+                "davinci"
+            ],
+            "option": ""
+        },
+        {
+            "data": "C:\\Program Files\\TouchOSC\\TouchOSC.exe",
+            "keys": [
+                "touchosc"
+            ],
+            "option": ""
         }
     ],
     "cmd": [
@@ -269,6 +283,20 @@
                 "startup"
             ],
             "option": ""
+        },
+        {
+            "data": "\\\\NAS453\\Public\\Share",
+            "keys": [
+                "sharenas"
+            ],
+            "option": ""
+        },
+        {
+            "data": "D:\\data\\code\\of_v0.11.2_vs2017_release\\apps\\myApps\\oscLauncher\\bin",
+            "keys": [
+                "osclauncher"
+            ],
+            "option": ""
         }
     ],
     "txt": [
@@ -334,6 +362,20 @@
             "data": "https://mail.google.com/mail/",
             "keys": [
                 "gmail"
+            ],
+            "option": ""
+        },
+        {
+            "data": "https://drive.google.com/drive/my-drive",
+            "keys": [
+                "drive"
+            ],
+            "option": ""
+        },
+        {
+            "data": "https://docs.google.com/spreadsheets/u/0/",
+            "keys": [
+                "sheet"
             ],
             "option": ""
         }

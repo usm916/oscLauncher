@@ -169,6 +169,15 @@ void OscLauncher::update()
 				currentPage = 5;
 				ofLog(OF_LOG_VERBOSE) << "change 2 Unreal";
 			}
+			else if (windowName.find("DaVinci") < 1000000 && !bYoutube && !bChrome)
+			{
+				ofxOscMessage m;
+				m.setAddress("/pager");
+				m.addInt32Arg(1);
+				sendOSC(m);
+				currentPage = 1;
+				ofLog(OF_LOG_VERBOSE) << "change 2 DaVinci";
+			}
 			else
 			{
 				if (currentPage != 1)
@@ -239,12 +248,52 @@ void OscLauncher::update()
 		string mAdr2;
 		string mAdr = mAdr2 = m.getAddress();
 		vector<string> &vMsg = ofSplitString(mAdr, "_");
-
+		
 		if (vMsg[0] == "/pinch")
 		{
 			updateTouch++;
 			bA[0] = bA[1] = true;
 			pinchUpdate(m.getArgAsFloat(0), m.getArgAsBool(2));
+		}
+		else if (vMsg[0] == "/ms")
+		{
+			if (vMsg[2] == "lc")
+			{
+				if(m.getArgAsBool(0))applyMouse(MOUSEEVENTF_LEFTDOWN);
+				else	applyMouse(MOUSEEVENTF_LEFTUP);
+			}
+			else if (vMsg[2] == "rc")
+			{
+				if (m.getArgAsBool(0))applyMouse(MOUSEEVENTF_RIGHTDOWN);
+				else	applyMouse(MOUSEEVENTF_RIGHTUP);
+			}
+			else if (vMsg[2] == "mc")
+			{
+				if (m.getArgAsBool(0))applyMouse(MOUSEEVENTF_MIDDLEDOWN);
+				else	applyMouse(MOUSEEVENTF_MIDDLEUP);
+			}
+			else if (vMsg[2] == "x1c")
+			{
+				if (m.getArgAsBool(0))applyMouse(MOUSEEVENTF_XDOWN, XBUTTON1);
+				else	if (m.getArgAsBool(0))applyMouse(MOUSEEVENTF_XUP, XBUTTON1);
+			}
+			else if (vMsg[2] == "x2c")
+			{
+				if (m.getArgAsBool(0))applyMouse(MOUSEEVENTF_XDOWN, XBUTTON2);
+				else	applyMouse(MOUSEEVENTF_XUP, XBUTTON2);
+			}
+			else if (vMsg[2] == "wheelf")
+			{
+				applyMouse(MOUSEEVENTF_WHEEL, WHEEL_DELTA);
+				//ofSleepMillis(10);
+				//applyMouse(MOUSEEVENTF_MIDDLEUP);
+			}
+			else if (vMsg[2] == "wheelb")
+			{
+				applyMouse(MOUSEEVENTF_WHEEL, -WHEEL_DELTA);
+				//ofSleepMillis(10);
+				//applyMouse(MOUSEEVENTF_MIDDLEUP);
+			}
 		}
 		else if (vMsg[0] == "/xy" || vMsg[0] == "/multixy/1")
 		{
@@ -280,6 +329,8 @@ void OscLauncher::update()
 				if (vMsg[2] == "s")int a = system("\"C:\\Windows\\System32\\cmd.exe /c D:\\data\\utilApps\\QRes\\QRes2048.bat\"");
 				if (vMsg[2] == "4k")int a = system("\"C:\\Windows\\System32\\cmd.exe /c D:\\data\\utilApps\\QRes\\QRes_4K.bat\"");
 				if (vMsg[2] == "24")int a = system("\"C:\\Windows\\System32\\cmd.exe /c D:\\data\\utilApps\\QRes\\QRes_24.bat\"");
+				if (vMsg[2] == "22m")int a = system("\"C:\\Windows\\System32\\cmd.exe /c D:\\data\\utilApps\\QRes\\QRes2266m.bat\"");
+				if (vMsg[2] == "17m")int a = system("\"C:\\Windows\\System32\\cmd.exe /c D:\\data\\utilApps\\QRes\\QRes1700m.bat\"");
 			}
 			else
 			{
@@ -698,7 +749,7 @@ void OscLauncher::applyModKeys(INPUT *_inputs, string _msg, int &_step, bool _ri
 		if (p!=-1)
 		{
 			_msg.erase(p, 1);
-			ofLog(OF_LOG_VERBOSE) << "p=" << p << " step=" << _step << " " << &(_inputs[_step]);
+			ofLog(OF_LOG_VERBOSE) << i << " : p = " << p << " step = " << _step << " " << &(_inputs[_step]);
 			modWork(&(_inputs[_step]), sid[i], _rise);
 			_step++;
 		}
@@ -717,7 +768,7 @@ void OscLauncher::modWork(INPUT *_input, string _str, bool _rise)
 	else if (_str == "A") { modType = VK_MENU; }
 	else if (_str == "S") { modType = VK_SHIFT; }
 
-	ofLog(OF_LOG_VERBOSE) << "<mod> modType = 0x" << std::hex << modType << "RISE " << _rise;
+	ofLog(OF_LOG_VERBOSE) << "<mod> modType = 0x" << std::hex << modType << " RISE " << _rise;
 
 	_input->type = INPUT_KEYBOARD;
 	_input->ki.wVk = modType;
@@ -1114,10 +1165,9 @@ void OscLauncher::initializeTouch()
 void OscLauncher::touchUpdate(int touchID, float x, float y, bool bPush)
 {
 	ofLog(OF_LOG_VERBOSE) << "touch ID :::: " << touchID;
-	//			ofLog() << "MS pos " <<  << " " << cMSPos.x << " : " << cMSPos.y;
+
 	touchScale = 700;
-	//vtPos[touchID].x = cMSPos.x + 2.0 * touchScale * (x - 0.5);
-	//vtPos[touchID].y = cMSPos.y + touchScale * (y - 0.5);
+
 	float cx = 0.5 * (activeRect.left + activeRect.right);
 	float cy = 0.5 * (activeRect.bottom + activeRect.top);
 	float cw = activeRect.right - activeRect.left;
@@ -1206,4 +1256,52 @@ void OscLauncher::pinchUpdate( float x, bool bPush)
 		}
 		vPTouch[touchID] = vCtouch[touchID];
 	}
+}
+
+void OscLauncher::applyMouse(DWORD _btn, DWORD _data)
+{
+	//INPUT Input = { 0 };
+	//double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
+	//double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
+	//double fx = x * (65535.0f / fScreenWidth);
+	//double fy = y * (65535.0f / fScreenHeight);
+	INPUT  Input = { 0 };
+
+	::ZeroMemory(&Input, sizeof(INPUT));
+	Input.type = INPUT_MOUSE;
+	Input.mi.mouseData = _data;
+	Input.mi.dwFlags = _btn;
+	::SendInput(1, &Input, sizeof(INPUT));
+
+	//::ZeroMemory(&Input, sizeof(INPUT));
+	//Input.type = INPUT_MOUSE;
+	//Input.mi.dwFlags = MOUSEEVENTF_MIDDLEUP;
+	//::SendInput(1, &Input, sizeof(INPUT));
+
+	//vector<INPUT> inputs;
+	//inputs.push_back(INPUT());
+	//inputs.resize(4);
+	//ZeroMemory(inputs.data(), sizeof(inputs));
+
+	//inputs.back().type = INPUT_MOUSE;
+	//inputs.back().mi.dwFlags;
+
+	//inputs.back().type = INPUT_KEYBOARD;
+	//inputs.back().ki.wVk = VK_D;
+	//
+	//inputs.back().type = INPUT_KEYBOARD;
+	//inputs.back().ki.wVk = VK_D;
+	//inputs.back().ki.dwFlags = KEYEVENTF_KEYUP;
+
+	//inputs.back().type = INPUT_KEYBOARD;
+	//inputs.back().ki.wVk = VK_LWIN;
+	//inputs.back().ki.dwFlags = KEYEVENTF_KEYUP;
+
+	//UINT uSent = SendInput(inputs.size(), inputs.data(), sizeof(INPUT));
+
+	//if (uSent != inputs.size())
+	//{
+	//	cout << "SendInput failed" << endl;
+	//}
+	
 }

@@ -147,59 +147,65 @@ int main()
 {
 	//CTray cTray;
 	cout << "strat main()" << endl;
+	vector<tray_menu> tr;
 
-    tray_menu tr[7];
+	tr.push_back(tray_menu());
+	tr.back().text = "Hello World with task tray !";
+	tr.back().cb = hello_cb;
+	tr.back().disabled = 1;
+	tr.back().checked = 0;
+	tr.back().checkbox = 0;
+	tr.back().submenu = NULL;
 
-	tr[0].text = "Hello World with task tray !";
-	tr[0].cb = hello_cb;
-	tr[0].disabled = 1;
-	tr[0].checked = 0;
-	tr[0].checkbox = 0;
-	tr[0].submenu = NULL;
+	tr.push_back(tray_menu());
+	tr.back().text = "Open log";
+	tr.back().cb = openlog_cb;
+	tr.back().disabled = 0;
+	tr.back().checked = 0;
+	tr.back().checkbox = 0;
+	tr.back().submenu = NULL;
 
-	tr[1].text = "Open log";
-	tr[1].cb = openlog_cb;
-	tr[1].disabled = 0;
-	tr[1].checked = 0;
-	tr[1].checkbox = 0;
-	tr[1].submenu = NULL;
+	tr.push_back(tray_menu());
+	tr.back().text = "Open Json Editor";
+	tr.back().cb = editKeys_cb;
+	tr.back().disabled = 0;
+	tr.back().checked = 0;
+	tr.back().checkbox = 0;
+	tr.back().submenu = NULL;
 
-	tr[2].text = "Open Json Editor";
-	tr[2].cb = editKeys_cb;
-	tr[2].disabled = 0;
-	tr[2].checked = 0;
-	tr[2].checkbox = 0;
-	tr[2].submenu = NULL;
+	tr.push_back(tray_menu());
+	tr.back().text = "Open KeyVK Editor";
+	tr.back().cb = editKeyMap_cb;
+	tr.back().disabled = 0;
+	tr.back().checked = 0;
+	tr.back().checkbox = 0;
+	tr.back().submenu = NULL;
 
-	tr[3].text = "Open KeyVK Editor";
-	tr[3].cb = editKeyMap_cb;
-	tr[3].disabled = 0;
-	tr[3].checked = 0;
-	tr[3].checkbox = 0;
-	tr[3].submenu = NULL;
+	tr.push_back(tray_menu());
+	tr.back().text = "-";
+	tr.back().disabled = 0;
+	tr.back().checked = 0;
+	tr.back().checkbox = 0;
+	tr.back().submenu = NULL;
 
-	tr[4].text = "-";
-	tr[4].disabled = 0;
-	tr[4].checked = 0;
-	tr[4].checkbox = 0;
-	tr[4].submenu = NULL;
+	tr.push_back(tray_menu());
+	tr.back().text = "Quit";
+	tr.back().disabled = 0;
+	tr.back().checked = 0;
+	tr.back().checkbox = 0;
+	tr.back().cb = quit_cb;
+	tr.back().submenu = NULL;
 
-	tr[5].text = "Quit";
-	tr[5].disabled = 0;
-	tr[5].checked = 0;
-	tr[5].checkbox = 0;
-	tr[5].cb = quit_cb;
-	tr[5].submenu = NULL;
-
-	tr[6].text = NULL;
-	tr[6].disabled = 0;
-	tr[6].checked = 0;
-	tr[6].checkbox = 0;
-	tr[6].submenu = NULL;
+	tr.push_back(tray_menu());
+	tr.back().text = NULL;
+	tr.back().disabled = 0;
+	tr.back().checked = 0;
+	tr.back().checkbox = 0;
+	tr.back().submenu = NULL;
 
 	ctray.icon = TRAY_ICON1;
 	ctray.tooltip = "oscLauncher";
-	ctray.menu = tr;
+	ctray.menu = tr.data();
 
 #ifdef USE_INPUT
 #else

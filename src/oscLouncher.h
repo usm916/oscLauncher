@@ -77,7 +77,8 @@ class OscLauncher : public ofBaseApp{
 		void applyKeys(INPUT *_inputs, string _ms, int &_step, bool extended = false);
 		void applyModKeys(INPUT *_inputs, string _ms, int &_step, bool _rise = false);
 		void modWork(INPUT *_input, string _str, bool _rise = false);
-		
+		void applyMouse(DWORD _btn, DWORD _data = 0);
+
 		void touchinject(int x, int y, int _bTouch, int _tID);
 		bool pTouch;
 		void SetNumLock(BOOL bState);

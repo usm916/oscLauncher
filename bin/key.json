@@ -125,6 +125,12 @@
 		{ "key":"oemminus","hex":"bd" },
 		{ "key":"oemperiod","hex":"be" },
 		{ "key":"oem2","hex":"bf" },
-		{ "key":"oem3","hex":"c0" }
+		{ "key":"oem3","hex":"c0" },
+		{ "key":"oem4","hex":"db" },
+		{ "key":"oem5","hex":"dc" },
+		{ "key":"oem6","hex":"dd" },
+		{ "key":"oem7","hex":"de" },
+		{ "key":"oem8","hex":"df" },
+		{ "key":"oemclear","hex":"fe" }
 	]
 }
