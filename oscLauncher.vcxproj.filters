@@ -7,9 +7,6 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\ofApp.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\addons\ofxImGui\src\BaseEngine.cpp">
       <Filter>addons\ofxImGui\src</Filter>
     </ClCompile>
@@ -88,10 +85,13 @@
     <ClCompile Include="src\oscLouncher.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\KeyManager.cpp">
+    <ClCompile Include="src\DataExcutor.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="SysExcuter.cpp">
+    <ClCompile Include="src\DataManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SysExcutor.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,9 +143,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ofApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\addons\ofxImGui\src\BaseEngine.h">
       <Filter>addons\ofxImGui\src</Filter>
     </ClInclude>
@@ -260,10 +257,13 @@
     <ClInclude Include="src\oscLouncher.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\KeyManager.h">
+    <ClInclude Include="src\DataExcutor.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\SysExcuter.h">
+    <ClInclude Include="src\DataManager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SysExcutor.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

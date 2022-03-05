@@ -1,0 +1,545 @@
+{
+    "app": [
+        {
+            "data": [
+                "C:\\Program Files\\Side Effects Software\\Houdini 18.5.696\\bin\\houdinifx.exe"
+            ],
+            "keys": [
+                "houdini"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Program Files\\Blender Foundation\\ecycles\\blender.exe"
+            ],
+            "keys": [
+                "blender"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\devenv.exe"
+            ],
+            "keys": [
+                "visualstudio2019"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\IDE\\devenv.exe"
+            ],
+            "keys": [
+                "visualstudio2017"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Users\\noTempo\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+            ],
+            "keys": [
+                "vscode"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Windows\\System32\\cmd.exe"
+            ],
+            "keys": [
+                "cmd"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Windows\\WinSxS\\wow64_microsoft-windows-calc_31bf3856ad364e35_10.0.19041.1_none_6a03b910ee7a4073\\calc.exe"
+            ],
+            "keys": [
+                "calc"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Program Files\\NVIDIA Corporation\\NVIDIA GeForce Experience\\NVIDIA GeForce Experience.exe"
+            ],
+            "keys": [
+                "nvexp"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\program Files\\Google\\Chrome\\Application\\chrome.exe"
+            ],
+            "keys": [
+                "chrome"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Users\\noTempo\\AppData\\Local\\slack\\slack.exe"
+            ],
+            "keys": [
+                "slack"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Program Files (x86)\\GPU-Z\\GPU-Z.exe"
+            ],
+            "keys": [
+                "gpuz"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\code\\of_v0.11.2_vs2017_release\\apps\\myApps\\oscLauncher\\bin\\keyEdito.bat"
+            ],
+            "keys": [
+                "keyeditor"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Program Files\\Blackmagic Design\\DaVinci Resolve\\Resolve.exe"
+            ],
+            "keys": [
+                "davinci"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Program Files\\TouchOSC\\TouchOSC.exe"
+            ],
+            "keys": [
+                "touchosc"
+            ],
+            "title": ""
+        }
+    ],
+    "cmd": [
+        {
+            "data": [
+                "D:\\data\\utilApps\\QRes\\QRes2048.bat"
+            ],
+            "keys": [
+                "qres_2048"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\utilApps\\QRes\\QRes_4K.bat"
+            ],
+            "keys": [
+                "qres_4k"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\utilApps\\QRes\\QRes_24.bat"
+            ],
+            "keys": [
+                "qres_24"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "MAIN.CPL"
+            ],
+            "keys": [
+                "mouse"
+            ],
+            "title": ""
+        }
+    ],
+    "f": [
+        {
+            "data": [
+                "D:\\data\\code\\winApp"
+            ],
+            "keys": [
+                "winapp"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Users\\noTempo\\Downloads"
+            ],
+            "keys": [
+                "download"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\utilApps"
+            ],
+            "keys": [
+                "utilapp"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "\\\\asrx299\\data\\temp\\fab"
+            ],
+            "keys": [
+                "fab"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\projects"
+            ],
+            "keys": [
+                "projects"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\projects\\Viet"
+            ],
+            "keys": [
+                "viet"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\code"
+            ],
+            "keys": [
+                "code"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\code"
+            ],
+            "keys": [
+                "onenote"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Users\\noTempo"
+            ],
+            "keys": [
+                "documents"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\code"
+            ],
+            "keys": [
+                "startup"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Program Files"
+            ],
+            "keys": [
+                "program"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "\\\\NAS453\\Public\\Share"
+            ],
+            "keys": [
+                "nasshare"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\code"
+            ],
+            "keys": [
+                "bluetooth"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\code"
+            ],
+            "keys": [
+                "device"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Program Files\\NVIDIA Corporation\\NVIDIA GeForce Experience\\NVIDIA GeForce Experience.exe"
+            ],
+            "keys": [
+                "nvexp"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\code"
+            ],
+            "keys": [
+                "nvctrl"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\code"
+            ],
+            "keys": [
+                "mouse"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\code"
+            ],
+            "keys": [
+                "application"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\code\\of_v0.11.2_vs2017_release"
+            ],
+            "keys": [
+                "of112"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\Program Files\\TouchOSC\\TouchOSC.exe"
+            ],
+            "keys": [
+                "touchosc"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs"
+            ],
+            "keys": [
+                "startmenu"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp"
+            ],
+            "keys": [
+                "startup"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "\\\\NAS453\\Public\\Share"
+            ],
+            "keys": [
+                "sharenas"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "D:\\data\\code\\of_v0.11.2_vs2017_release\\apps\\myApps\\oscLauncher\\bin"
+            ],
+            "keys": [
+                "osclauncher"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "\\\\NAS453\\home\\data\\projects"
+            ],
+            "keys": [
+                "nasprojects"
+            ],
+            "title": ""
+        }
+    ],
+    "txt": [
+        {
+            "data": [
+                "abcdefghijklmnopqrstuvwxyz"
+            ],
+            "keys": [
+                "test1"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "ABCDEFGHIJKLMNOPQRSTUVXYZ"
+            ],
+            "keys": [
+                "test2"
+            ],
+            "title": ""
+        }
+    ],
+    "url": [
+        {
+            "data": [
+                "https://www.youtube.com"
+            ],
+            "keys": [
+                "youtube"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "https://www.google.com"
+            ],
+            "keys": [
+                "google"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "https://twitter.com/home"
+            ],
+            "keys": [
+                "twitter"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "https://www.pinterest.jp/"
+            ],
+            "keys": [
+                "pinterest"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "https://www.amazon.co.jp/"
+            ],
+            "keys": [
+                "amazon"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "https://www.amazon.co.jp/gp/browse.html?node=2351649051&ref_=nav_em__aiv_vid_0_2_2_2"
+            ],
+            "keys": [
+                "amazonvideo"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "https://mail.google.com/mail/"
+            ],
+            "keys": [
+                "gmail"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "https://drive.google.com/drive/my-drive"
+            ],
+            "keys": [
+                "drive"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "https://docs.google.com/spreadsheets/u/0/"
+            ],
+            "keys": [
+                "sheet"
+            ],
+            "title": ""
+        },
+        {
+            "data": [
+                "https://www.dropbox.com/home/FY22_360SSM_share"
+            ],
+            "keys": [
+                "fy22"
+            ],
+            "title": ""
+        }
+    ],
+    "typing": [
+        {
+            "data": [
+                "geometry"
+            ],
+            "keys": [
+                "hougeometry"
+            ],
+            "title": ""
+        }
+    ],
+    "combi": [
+        {
+            "data": [
+                "code",
+                "osc",
+                "winapp",
+                "blender"
+            ],
+            "keys": [
+                "openset01"
+            ],
+            "title": "comb_01"
+        }
+    ],
+    "Keybind": [
+        {
+            "data": [
+                "key",
+                "C",
+                "w"
+            ],
+            "keys": [
+                "kbClose"
+            ],
+            "title": "close"
+        }
+    ]
+}

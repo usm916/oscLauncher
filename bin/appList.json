@@ -297,6 +297,13 @@
                 "osclauncher"
             ],
             "option": ""
+        },
+        {
+            "data": "\\\\NAS453\\home\\data\\projects",
+            "keys": [
+                "nasprojects"
+            ],
+            "option": ""
         }
     ],
     "txt": [
@@ -376,6 +383,31 @@
             "data": "https://docs.google.com/spreadsheets/u/0/",
             "keys": [
                 "sheet"
+            ],
+            "option": ""
+        },
+        {
+            "data": "https://www.dropbox.com/home/FY22_360SSM_share",
+            "keys": [
+                "fy22"
+            ],
+            "option": ""
+        }
+    ],
+    "typing": [
+        {
+            "data": "geometry",
+            "keys": [
+                "hou_geometry"
+            ],
+            "option": ""
+        }
+    ],
+    "cmb": [
+        {
+            "data": "D:\\data\\utilApps\\QRes\\QRes2048.bat",
+            "keys": [
+                "qres_2048"
             ],
             "option": ""
         }

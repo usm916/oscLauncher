@@ -66,7 +66,11 @@ static 	void editKeys_cb(struct tray_menu* item) {
 	system(ss.str().c_str());
 
 	stringstream ss2;
-	ss2 << "explorer keyEdito.bat";
+
+	//if (vMsg[2] == "s")int a = system("\"C:\\Windows\\System32\\cmd.exe /c D:\\data\\utilApps\\QRes\\QRes2048.bat\"");
+	
+	ss2 << "start keyEdito.bat";
+	ofLogVerbose() << ss2.str() << " ::: " << ofFilePath::getCurrentExePath();
 	system(ss2.str().c_str());
 	tray_update(&ctray);
 }
@@ -204,7 +208,7 @@ int main()
 	tr.back().submenu = NULL;
 
 	ctray.icon = TRAY_ICON1;
-	ctray.tooltip = "oscLauncher";
+	ctray.tooltip = "SysExcuter";
 	ctray.menu = tr.data();
 
 #ifdef USE_INPUT

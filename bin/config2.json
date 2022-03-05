@@ -28,15 +28,11 @@
         },
         {
             "display": "  Key bind  ",
-            "type": "Keybind"
-        },
-        {
-            "display": "  typing  ",
-            "type": "typing"
+            "type": "Key"
         },
         {
             "display": "   Combination   ",
-            "type": "combi"
+            "type": "cmb"
         }
     ],
     "listenPort": 12233,
