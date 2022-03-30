@@ -1,4 +1,17 @@
 {
+    "Keybind": [
+        {
+            "data": [
+                "key",
+                "C",
+                "w"
+            ],
+            "keys": [
+                "kbClose"
+            ],
+            "title": "close"
+        }
+    ],
     "app": [
         {
             "data": [
@@ -163,6 +176,20 @@
                 "mouse"
             ],
             "title": ""
+        }
+    ],
+    "combi": [
+        {
+            "data": [
+                "code",
+                "osc",
+                "winapp",
+                "blender"
+            ],
+            "keys": [
+                "openset01"
+            ],
+            "title": "comb_01"
         }
     ],
     "f": [
@@ -412,6 +439,17 @@
             "title": ""
         }
     ],
+    "typing": [
+        {
+            "data": [
+                "geometry"
+            ],
+            "keys": [
+                "hougeometry"
+            ],
+            "title": ""
+        }
+    ],
     "url": [
         {
             "data": [
@@ -502,44 +540,6 @@
                 "fy22"
             ],
             "title": ""
-        }
-    ],
-    "typing": [
-        {
-            "data": [
-                "geometry"
-            ],
-            "keys": [
-                "hougeometry"
-            ],
-            "title": ""
-        }
-    ],
-    "combi": [
-        {
-            "data": [
-                "code",
-                "osc",
-                "winapp",
-                "blender"
-            ],
-            "keys": [
-                "openset01"
-            ],
-            "title": "comb_01"
-        }
-    ],
-    "Keybind": [
-        {
-            "data": [
-                "key",
-                "C",
-                "w"
-            ],
-            "keys": [
-                "kbClose"
-            ],
-            "title": "close"
         }
     ]
 }
